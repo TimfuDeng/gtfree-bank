@@ -1,0 +1,131 @@
+.topbar {
+    height: 43px;
+    line-height: 41px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1000;
+}
+.topLeft a {
+    padding: 0 10px;
+    display: inline-block;
+}
+
+.search_bar{
+     height: 43px;
+     line-height: 41px;
+     padding: 5px 5px;
+     background-color: #f9f9f9;
+     position: relative;
+     margin:10px 0px;
+     border-bottom: 1px solid #ddd;
+     border-top: 1px solid #ddd;
+ }
+
+.search_bar_count_list{
+    height: inherit;
+    line-height: 41px;
+    padding: 5px 5px;
+    background-color: #f9f9f9;
+    position: relative;
+    margin:10px 0px;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+}
+
+.label-select{
+    background-color: #d91615;
+    color: #fff;
+}
+
+.colBox{
+    margin: 15px;
+    width: 290px;
+    float: left;
+    cursor: pointer;
+    -moz-border-radius: 3px; /* Firefox */
+    -webkit-border-radius: 3px; /* Safari 和 Chrome */
+    border-radius: 3px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+
+    -moz-box-shadow: 1px 1px 1px #c0c0c0; /* Firefox */
+    -webkit-box-shadow: 1px 1px 1px #c0c0c0; /* Safari 和 Chrome */
+    box-shadow: 1px 1px 1px #c0c0c0; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+
+}
+.colBoxNo1{
+    border: 1px solid #ff5a00; height: 127px;
+}
+.colBoxNo2{
+    border: 1px solid #3a881f; height: 127px;
+}
+.colBoxNo3{
+    border: 1px solid #1c2a56; height: 127px;
+}
+.info{
+    height: 45px;
+    line-height: 45px;
+    padding-left: 20px;
+
+}
+.iconfont{
+    float: left;
+    font-size: 25px;
+    /*color: #FFFFFF;     */
+}
+.info-title{
+    float: left;
+    font-size: 22px;
+    color: #FFFFFF;
+    margin-left: 5px;
+    text-align: center;
+    width: 190px;
+}
+.info-txt{
+    padding-top: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+.info-txt span{
+    font-size: 20px;
+    padding: 0 8px;
+}
+
+.modList{cursor: pointer;display: block;  margin-left: 15px;overflow: auto; width:935px;clear: both}
+
+.modList dt{
+    font-family: '微软雅黑';
+    color: #525252;
+    font-size: 16px;
+    font-weight: bold;
+    width: 280px;
+    line-height: 75px;
+    height: 75px;
+    float: left;
+    border-bottom: 1px solid #ececec;
+    padding-left: 20px;
+
+}
+
+.modList dd{
+    color: #9a9a9a;
+    font-size: 14px;
+    width: 635px;
+    float: left;
+    line-height: 75px;
+    height: 75px;
+    border-bottom: 1px solid #ececec;
+
+}
+.modList dd span a{
+    width: 50px;
+    float: right;
+    color: #4c8bb5;
+    text-decoration: none;
+}
+span.current{
+    background-color: #999999 !important;
+}
+
+
+
+
+nav .iconfont{font-size: 14px ;padding-right: 10px;}

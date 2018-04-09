@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<groups xmlns="http://www.isdc.ro/wro">
+
+    <group name="base">
+        <js minimize="false">/static/jquery/jquery.min.js</js>
+        <js>/static/h-ui/js/H-ui.js</js>
+        <js minimize="false">/static/lib/laytpl.js</js>
+        <js minimize="false">/static/xdate/xdate.js</js>
+        <js>/static/js/xzq.js</js>
+    </group>
+
+    <group name="index">
+        <css>/static/h-ui/css/H-ui.css</css>
+        <css>/static/css/index.css</css>
+
+        <js>/static/js/formquery.js</js>
+        <js>/static/js/index.js</js>
+    </group>
+
+    <group name="view">
+        <js minimize="false">/static/thridparty/H-ui.2.0/lib/html5.js</js>
+        <js minimize="false">/static/thridparty/H-ui.2.0/lib/respond.min.js</js>
+        <js minimize="false">/static/thridparty/H-ui.2.0/lib/PIE_IE678.js</js>
+    </group>
+
+
+
+</groups>

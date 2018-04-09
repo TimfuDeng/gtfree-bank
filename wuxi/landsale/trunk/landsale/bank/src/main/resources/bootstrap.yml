@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: bank-server
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+com:
+  zipkin:
+    serviceName: bank-server
+    url: http://127.0.0.1:9411
+    connectTimeout: 6000
+    readTimeout: 6000
+    flushInterval: 1
+    compressionEnabled: true
+
+javamd:
+  monitor:
+    enable: true
+
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://${center.server}/eureka/
+    healthcheck:
+      enabled: true
+
+hystrix:
+  threadpool:
+    default:
+      coreSize: 5000 ##并发执行的最大线程数，默认10
+      maxQueueSize: 5000 ##BlockingQueue的最大队列数
+      queueSizeRejectionThreshold: 1000 ##即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝
+  command:
+    default:
+      circuitBreaker:
+        enabled: false
+      execution:
+        isolation:
+          strategy: THREAD ## SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 100000 #缺省为1000
+          semaphore:
+            maxConcurrentRequests: 5000
+#  config:
+#    stream:
+#      maxConcurrentConnections: 50
+
+feign:
+  httpclient:
+    enabled:  false
+  hystrix:
+    enabled: true
+
+ribbon:
+  eureka:
+    enabled: true
+

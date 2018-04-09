@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<groups xmlns="http://www.isdc.ro/wro">
+
+    <group name="layout">
+        <css minimize="false">/static/thridparty/H-ui.2.0/static/h-ui/style.css</css>
+        <css minimize="false">/static/thridparty/H-ui.2.0/lib/icheck/icheck.css</css>
+        <css minimize="false">/static/thridparty/H-ui.2.0/lib/bootstrapSwitch/bootstrapSwitch.css</css>
+
+        <js minimize="false">/static/thridparty/H-ui.2.0/static/h-ui/js/H-ui.js</js>
+        <js minimize="false">/static/thridparty/xdate/xdate.js</js>
+        <js>/static/js/servertime.js</js>
+        <js>/static/js/ajaxDoResult.js</js>
+    </group>
+
+    <group name="H-ui-ie9">
+        <js minimize="false">/static/thridparty/H-ui.2.0/lib/html5.js</js>
+        <js minimize="false">/static/thridparty/H-ui.2.0/lib/respond.min.js</js>
+        <js minimize="false">/static/thridparty/H-ui.2.0/lib/PIE_IE678.js</js>
+    </group>
+
+    <group name="help">
+        <css>/static/css/landsale.css</css>
+        <css>/static/css/helpcenter.css</css>
+    </group>
+
+    <group name="index">
+        <css>/static/css/index.css</css>
+        <css>/static/css/landsale.css</css>
+    </group>
+
+    <group name="view">
+        <css>/static/css/landsale.css</css>
+
+        <js>/static/js/slide.js</js>
+        <js minimize="false">/static/thridparty/leaflet/leaflet.js</js>
+        <js minimize="false">/static/thridparty/H-ui.2.0/lib/bootstrap-modal.js</js>
+        <js minimize="false">/static/thridparty/H-ui.2.0/lib/bootstrap-modalmanager.js</js>
+        <js minimize="false">/static/thridparty/laytpl/laytpl.js</js>
+        <js>/static/js/map.js</js>
+        <js>/static/js/index.js</js>
+        <js>/static/js/view.js</js>
+    </group>
+
+    <group name="material">
+        <css>/static/css/landsale.css</css>
+    </group>
+
+    <group name="viewOfferList">
+        <js minimize="false">/static/thridparty/H-ui.2.0/static/h-ui/js/H-ui.js</js>
+        <js minimize="false">/static/thridparty/xdate/xdate.js</js>
+        <js minimize="true">/static/js/ajaxDoResult.js</js>
+    </group>
+
+
+</groups>

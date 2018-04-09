@@ -1,0 +1,49 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="view4ali:war exploded">
+    <output-path>$PROJECT_DIR$/target/view4ali_20170204153858</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="view4ali" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:3.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:3.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:3.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:3.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context-support:3.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-web:3.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:3.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:3.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:3.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:3.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: net.sf.ehcache:ehcache-core:2.6.9" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.16" />
+          <element id="library" level="project" name="Maven: com.google.guava:guava:17.0" />
+          <element id="library" level="project" name="Maven: ro.isdc.wro4j:wro4j-core:1.7.7" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.1" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.7" />
+          <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.1.2" />
+          <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.7" />
+          <element id="library" level="project" name="Maven: org.postgresql:postgresql:9.4.1208.jre7" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.3.1" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.3.0" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.0.26" />
+          <element id="library" level="project" name="Maven: com.aliyun.openservices:ons-client:1.2.1" />
+          <element id="library" level="project" name="Maven: com.alibaba.rocketmq:rocketmq-client:3.4.9" />
+          <element id="library" level="project" name="Maven: com.alibaba.rocketmq:rocketmq-common:3.4.9" />
+          <element id="library" level="project" name="Maven: com.alibaba.rocketmq:rocketmq-remoting:3.4.9" />
+          <element id="library" level="project" name="Maven: io.netty:netty-all:4.0.33.Final" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.9" />
+          <element id="library" level="project" name="Maven: com.aliyun.openservices:ons-api:1.2.1" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="E:\worksapce\view4ali\view4ali\target/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="view4ali/web/Web" />
+    </root>
+  </artifact>
+</component>

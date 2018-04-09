@@ -1,0 +1,215 @@
+@charset "utf-8";
+
+@font-face {font-family: "iconfont";
+    src: url('iconfont.eot?t=1474941031'); /* IE9*/
+    src: url('iconfont.eot?t=1474941031#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('iconfont.woff?t=1474941031') format('woff'), /* chrome, firefox */
+    url('iconfont.ttf?t=1474941031') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    url('iconfont.svg?t=1474941031#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+    font-family:"iconfont" !important;
+    font-size:16px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* CSS Document */
+/*1.1 布局*/
+.wp{
+    width:1278px;
+    margin:0px auto 10px auto;
+    background:#fff;
+
+    border-left:1px solid #ddd;
+    border-right:1px solid #ddd;
+    border-bottom:1px solid #ddd;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.wp .row{
+    border-bottom:1px solid #ddd;
+}
+.header {
+    border-bottom: 2px solid #24b089;
+    background:#fff;
+    min-width: 1280px;
+}
+.headerContent {
+    width: 1280px;
+    margin:0 auto;
+}
+.LOGO {
+
+    height: 125px;
+    background: url(../images/logo.png) no-repeat 0px 20px;
+    _display: block;/*IE6*/
+    _float: left;/*IE6*/
+}
+
+.LOGO img {
+    width: 305px;
+}
+
+
+/*  面包屑 */
+.breadcrumb {
+
+    list-style: none;
+    background-color: #f5f5f5;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    padding-left: 20px;
+}
+.breadcrumb li {
+    float: left;
+}
+.breadcrumb li a {
+    color: #054d82;
+}
+.tab_menu{
+    border-bottom: 1px solid rgb(230, 230, 230); bottom: auto; left: auto; position: static; top: 0px; height: 56px; width: 1188px; background-color: rgb(246, 246, 246);
+}
+.topTime{
+    background:#fafafa;
+    padding:6px 0px;
+    border-bottom:1px solid #ddd;
+
+}
+.topTimeContent{
+    width:1280px;
+    margin:0 auto;
+    position:relative;
+}
+.topTimeLeft{
+    line-height:30px;
+}
+.topTimeRight{
+    position:absolute;
+    top:4px;
+    right:0px;
+}
+.topTimeRight a{
+    color:#999;
+}
+.titleDiv{
+    font-weight:700;
+    background:#24b089;
+    color:#fff;
+    padding-left:20px;
+    font-size: 30px;
+    line-height: 58px;
+}
+.tradingLab {
+    border-top: 3px solid #24b089;
+    padding:10px;
+
+    font-weight:900;
+    color:#24b089;
+    margin:0px;
+    font-size:22px;
+}
+
+.col-md-9{
+    padding-right: 0px;
+
+}
+.col-md-3{
+    padding-left: 0px;
+    border-left: 1px solid #ddd;
+}
+.table tbody tr td{
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+.tabBar span.current {
+    background-color: #24b089;
+}
+.tabBar{
+    border-bottom: 2px solid #24b089;
+}
+.footer {
+    min-width: 1200px;
+    clear: both;
+    border-top: 1px solid #ddd;
+    background: #eee;
+}
+.callUs {
+    padding: 10px 0;
+    margin: 0 auto;
+    width:1280px;
+    line-height:24px;
+    color:#999;
+    text-align: left;
+}
+.contentDiv{
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-size: 20px;
+}
+.infoDiv{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 20px;
+    background-color: #e8e8e8;
+    height: 100px;
+    text-align: center;
+}
+.spanPrice{
+    color: #d91615;
+    font-size: 30px;
+    padding-left: 10px;
+    font-weight: bold;
+}
+.rmb-unit{
+    font-style: normal;
+    font-size: 20px;
+    color: #d91615;
+}
+.spanTime,.spanTime em{
+    font-style: normal;
+}
+.spanTime var{
+    font-size: 30px;
+    font-weight: bold;
+    padding-right:5px;
+}
+.spanTime em{
+    padding-right:5px;
+}
+.infotitle{
+    border-left: 4px solid #24b089;
+    padding: 0px 0px 0px 20px;
+    font-size: 24px;
+    font-weight: 500;
+
+}
+.content1{
+    padding: 20px;
+    margin: 0px 0px 20px 0px;
+    font-size: 14px;
+}
+.alignRight{
+    text-align: right;
+}
+
+.content1 .row{
+    border-bottom: 0px;
+    margin-bottom: 10px;
+}
+
+.spanPriceInfo{
+    font-size: 14px;
+    margin-right: 20px;
+    position:relative;
+    left:50px;
+}

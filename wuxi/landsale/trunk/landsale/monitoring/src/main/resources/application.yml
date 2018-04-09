@@ -1,0 +1,23 @@
+info:
+  name: monitoring-server
+  component: Monitoring Application Server
+
+server:
+  port: ${port:9002}
+
+center:
+  server: 192.168.8.61:8003
+
+turbine:
+  aggregator:
+    clusterConfig: default   # 指定聚合哪些集群，多个使用","分割，默认为default。可使用http://.../turbine.stream?cluster={clusterConfig之一}访问
+  appConfig: CLIENT-SERVER, monitoring-server ### 配置Eureka中的serviceId列表，表明监控哪些服务
+  clusterNameExpression: new String("default")
+
+
+logging:
+  pattern:
+    console: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([trace=%X{X-Trace-Id:-},span=%X{X-Span-Id:-}]){yellow} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wex'
+  level:
+    org.springframework: INFO
+    cn.gtmap.landsale: DEBUG

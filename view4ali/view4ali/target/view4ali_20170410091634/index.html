@@ -1,0 +1,259 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="./static/lib/html5.js"></script>
+    <script type="text/javascript" src="./static/lib/respond.min.js"></script>
+    <script type="text/javascript" src="./static/lib/PIE_IE678.js"></script>
+    <![endif]-->
+    <!--<link rel="stylesheet" type="text/css" href="./static/dist/index.css" />-->
+    <link rel="stylesheet" type="text/css" href="./static/h-ui/css/H-ui.css" />
+    <link rel="stylesheet" type="text/css" href="./static/css/index.css" />
+    <!--[if lt IE 9]>
+    <link href="./static/h-ui/css/H-ui.ie.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <title>江苏土地市场网-网上直播</title>
+    <meta name="keywords" content="国土资源,土地市场,网上直播">
+    <meta name="description" content="江苏土地市场网-网上直播">
+</head>
+<body>
+<!-- 头部时间 -->
+<div class="topTime">
+    <div class="topTimeContent">
+        <div class="topTimeLeft">
+            <a href="http://www.landjs.com" target="_blank"><i class="iconfont">&#xe602;</i>江苏省土地市场网</a>
+            <a href="javascript:addFavorite();" rel="sidebar"><i class="iconfont">&#xe601;</i>加入收藏</a>
+
+        </div>
+        <div class="topTimeRight"><i class="iconfont">&#xe603;</i>当前时间：<span id="serverTimeSpan"></span></div>
+
+    </div>
+</div>
+
+<header class="header">
+    <div class="headerContent cl">
+        <a href="#" title="江苏土地市场网" class="col-6 LOGO"></a>
+        <div class="col-6">
+            <div class="searchContent" style="padding:50px 0px 0px 0px;">
+                <form method="get"  style="border:1px solid #ddd;height:40px;">
+                    <input id="searchKeyword" name="searchKeyword"
+                           placeholder="请输入地块编号" class="searchInput" autocomplete="off" style="width:480px; text-indent:12px">
+                    <input name="searchBtn" type="button" value="查询" class="searchButton"  style=" position:absolute; right:0px;">
+                </form>
+            </div>
+        </div>
+    </div>
+
+</header>
+
+<div class="wp cl">
+    <div class="listing">
+    <div class="row cl" >
+        <div class="selectList1 col-12">
+            <ul id="regionul">
+                <li>
+                    <span class="btn btn-default radius">所在区域</span>
+                </li>
+                <li class="active" id="region32">
+                    <a href="#" >全省</a>
+                </li>
+                <li id="region3201">
+                    <a href="#">南京</a>
+                </li>
+                <li id="region3202">
+                    <a href="#">无锡</a>
+                </li>
+                <li id="region3203">
+                    <a href="#">徐州</a>
+                </li>
+                <li id="region3204">
+                    <a href="#">常州</a>
+                </li>
+                <li id="region3205">
+                    <a href="#">苏州</a>
+                </li>
+                <li id="region3206">
+                    <a href="#">南通</a>
+                </li>
+                <li id="region3207">
+                    <a href="#">连云港</a>
+                </li>
+                <li id="region3208">
+                    <a href="#">淮安</a>
+                </li>
+                <li id="region3209">
+                    <a href="#">盐城</a>
+                </li>
+                <li id="region3210">
+                    <a href="#">扬州</a>
+                </li>
+                <li id="region3211">
+                    <a href="#">镇江</a>
+                </li>
+                <li id="region3212">
+                    <a href="#">泰州</a>
+                </li>
+                <li id="region3213">
+                    <a href="#">宿迁</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row cl" >
+        <div class="selectList1 col-6">
+            <ul id="statusul">
+                <li>
+                    <span class="btn btn-default radius">地块状态</span>
+                </li>
+                <li class="active" id="status0">
+                    <a href="#" >全部</a>
+                </li>
+                <li id="status1">
+                    <a href="#" >报名中</a>
+                </li>
+                <li id="status2">
+                    <a href="#">挂牌中</a>
+                </li>
+                <li id="status3">
+                    <a href="#">竞价中</a>
+                </li>
+                <li id="status4">
+                    <a href="#">已结束</a>
+                </li>
+            </ul>
+        </div>
+        <div class="selectList1 col-6">
+            <ul id="useul">
+                <li>
+                    <span class="btn btn-default radius">地块用途</span>
+                </li>
+                <li class="active" id="use0">
+                    <a href="#" >全部</a>
+                </li>
+                <li id="use1">
+                    <a href="#" >经营性用地</a>
+                </li>
+                <li id="use2">
+                    <a href="#">工业用地</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    </div>
+
+    <div class="listingList1" id="resourceList">
+
+    </div>
+    <div class="tablePagination cl">
+        <ul>
+            <li class="paginationBtn"><input type="button"  id="pageBegin" value="&lt;&lt;"/></li>
+            <li class="paginationBtn"><input type="button"  id="pagePre" value="&lt;"/></li>
+            <li><span>当前第</span>
+                <span id="pageCurrent"  class="inputText"></span>
+                <span> 页， 共</span>
+                <span id="pageCount"  class="inputText"></span><span>页</span>
+            </li>
+            <li class="paginationBtn" ><input id="pageNext" type="button" value="&gt;"/> </li>
+            <li class="paginationBtn"><input id="pageEnd" type="button" value="&gt;&gt;"/></li>
+
+
+        </ul>
+    </div>
+</div>
+
+<!-- /内容部分  -->
+<footer class="footer">
+    <p class="callUs"> 电话：（86-25）86599901 86599902 86599907             传真：（86-25）86599907           E-mail：service@landjs.com <br/>
+        江苏省国土资源厅版权所有        未经同意请勿转载         江苏省国土资源厅主办        江苏省国土资源动态监测中心承办      网站备案号：苏ICP备05079240号                                                                                 今日访问: 2859</p>
+</footer>
+<!-- 微信二维码 -->
+<div class="QR"><img src="./static/images/ew11.png"><br/><img src="./static/images/ew.jpg"></div>
+<script type="text/javascript" src="./static/dist/base.js"></script>
+<script type="text/javascript" src="./static/dist/index.js"></script>
+<!--<script type="text/javascript" src="./static/js/formquery.js"></script>-->
+<!--<script type="text/javascript" src="./static/js/index.js"></script>-->
+
+<script id="resourceInfo" type="text/html" >
+    {{# for(var i = 0, len = d.length; i < len; i++){ }}
+	{{# var gpBeginTime=convertToDateLongValue(d[i].gpBeginTime);
+        var gpEndTime=convertToDateLongValue(d[i].gpEndTime);
+        var xsBeginTime=convertToDateLongValue(d[i].xsBeginTime);
+        var status=0;
+        if (_serverTime > gpBeginTime && _serverTime < gpEndTime){
+            status=1;
+        }else if(_serverTime>gpEndTime && _serverTime < xsBeginTime){
+            status=2;
+        }else if(_serverTime>xsBeginTime){
+            status=3;
+        }
+        if(d[i].overStatus && d[i].overStatus!=null && d[i].overStatus!=""){
+            status=4;
+        }
+    }}
+    <a href="view.html?id={{d[i].resourceId}}" target="_webpage_{{d[i].resourceId}}">
+        <ul>
+            <li class="li_title">
+                {{d[i].resourceCode}}
+                {{# if (status==0){ }}
+                <span class="label  label-success">公告中</span>
+                {{# } }}
+                {{# if (status==1){ }}
+                <span class="label  label-secondary">挂牌中</span>
+                {{# } }}
+                {{# if (status==2){ }}
+                <span class="label  label-danger">即将竞价</span>
+                {{# } }}
+                {{# if (status==3){ }}
+                <span class="label  label-danger">竞价中</span>
+                {{# } }}
+                {{# if (status==4){ }}
+                <span class="label  label-default">已结束</span>
+                {{# } }}
+            </li>
+            <li class="li_common li_price">
+                <span class="fontSize14">起拍价：<em class="price-font-small">{{d[i].beginOffer}}</em>万元</span>
+            </li>
+            <li class="li_common">
+                <span>保证金：{{d[i].fixedOffer}}万元</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>竞价幅度：{{d[i].addOffer}}万元</span>
+            </li>
+            <li class="li_common">
+                <span>位置：{{d[i].resourceLocation}}</span>
+            </li>
+            <li class="li_common">
+                {{# if (status==0){ }}
+                <span>距开始：<span class="timeDown" value="{{gpBeginTime}}"></span></span>
+                {{# } }}
+                {{# if (status==1){ }}
+                <span>距结束：<span class="timeDown" value="{{gpEndTime}}"></span></span>
+                {{# } }}
+                {{# if (status==2){ }}
+                <span>距开始：<span class="timeDown" value="{{xsBeginTime}}"></span></span>
+                {{# } }}
+                {{# if (status==3){ }}
+                <span>已开始：<span class="timeUp" value="{{xsBeginTime}}"></span></span>
+                {{# } }}
+                {{# if (status==4){ }}
+                <span>已结束：<span class="timeOver" value=""></span></span>
+                {{# } }}
+            </li>
+            <li class="arrangement">
+
+                <span class="arrangementCity">{{converToXzqByDm(d[i].regionCode)}}</span>
+                <p>
+                <span>用途：工业</span>
+                </p>
+                <p><span>面积：{{d[i].crArea}}㎡ （{{(d[i].crArea/666.67).toFixed(1)}}亩）</span></p>
+            </li>
+        </ul>
+    </a>
+    {{# } }}
+
+</script>
+</body>
+</html>

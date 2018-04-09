@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd  
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd  
+                        http://www.springframework.org/schema/mvc  
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+			   				http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+	<context:component-scan base-package="com.gtmap.txgc" />
+
+	<!-- 任务调用驱动：只有开启此配置spring容器才会去识别 @Async和@Scheduled注解，同时将执行的方法设置为异步并生成代理-->
+	<task:annotation-driven executor="myexecutor" scheduler="myScheduler"/>
+	<!-- 根据线程池大小、keep-alive、reject-policy配置来生成一个线程池执行器-->
+	<task:executor id="myexecutor" pool-size="10"  />
+	<!-- -定义个配置大小的线程池调读器-->
+	<task:scheduler id="myScheduler" pool-size="10"/>
+	<!-- 至少定义一个任务将其分配给调度器-->
+	<task:scheduled-tasks scheduler="myScheduler">
+		<!-- 调度任务所指向类实列的方法 每个小时运行一次 -->
+		<task:scheduled ref="industryService" method="querySuccessInfo" cron="* * 1 * * ?"/>
+	</task:scheduled-tasks>
+
+
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:jdbc.properties" />
+	</bean>
+	
+	<!-- 中间件数据库配置 -->
+	<bean id="commonDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${common.url}" />
+		<property name="username" value="${common.username}" />
+		<property name="password" value="${common.password}" />
+		<property name="initialSize" value="${initialSize}"></property>
+		<property name="maxActive" value="${maxActive}"></property>
+		<property name="maxIdle" value="${maxIdle}"></property>
+		<property name="minIdle" value="${minIdle}"></property>
+		<property name="maxWait" value="${maxWait}"></property>
+	</bean>
+
+	<!-- 苏州市局工业数据库配置 -->
+	<bean id="industryDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		  destroy-method="close">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${industry.url}" />
+		<property name="username" value="${industry.username}" />
+		<property name="password" value="${industry.password}" />
+		<property name="initialSize" value="${initialSize}"></property>
+		<property name="maxActive" value="${maxActive}"></property>
+		<property name="maxIdle" value="${maxIdle}"></property>
+		<property name="minIdle" value="${minIdle}"></property>
+		<property name="maxWait" value="${maxWait}"></property>
+	</bean>
+
+	<bean id="dynamicDataSource" class="com.gtmap.txgc.config.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="commonDataSource" value-ref="commonDataSource"></entry>
+				<entry key="industryDataSource" value-ref="industryDataSource"></entry>
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="commonDataSource"/>
+	</bean>
+
+
+		<bean id="=dataSourceAspect" class="com.gtmap.txgc.config.DataSourceAspect"/>
+
+
+
+
+	<!-- 定义sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dynamicDataSource" />
+		<property name="mapperLocations" value="classpath:/com/gtmap/txgc/mapper/*.xml"></property>
+		<property name="plugins">  
+        	<bean class="com.github.miemiedev.mybatis.paginator.OffsetLimitInterceptor">  
+        		 <property name="dialectClass" value="com.github.miemiedev.mybatis.paginator.dialect.OracleDialect"/>
+      	  	</bean>  
+    	</property>
+		<!--<property name="configLocation">
+			<value>classpath:/mybatis-env-setting.xml</value>
+		</property>-->
+	</bean>
+
+	<!-- 自动扫描dao层 在dao层注入sqlSessionFactory-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.gtmap.txgc.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+
+	<!-- 事务管理 有@Transactional的publick方法 自动加入事务 -->
+	<!--需配置 1-事务切面 2-动态数据库切面 执行顺序-->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dynamicDataSource" />
+	</bean>
+	<!-- 扫描所有有@Transactional的publick方法 可以被事务管理器注入-->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<!-- 事务 end-->
+	<!-- 定义事务的传播属性-->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 对add、delete、update方法进行事务-->
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<!-- 对剩余所有的方法进行事务-->
+			<tx:method name="*" propagation="NOT_SUPPORTED" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+
+
+	<aop:config>
+		<!--<aop:pointcut id="commonPointCut" expression="execution(* com.gtmap.txgc.service.CommonService.*(..))"/>-->
+		<aop:pointcut id="commonPointCut" expression="execution(* com.gtmap.txgc.service.industry.IndustryService.*(..))"/>
+		<aop:advisor pointcut-ref="commonPointCut" advice-ref="txAdvice" order="1"/>
+	<!--	<aop:advisor pointcut-ref="commonPointCut" advice-ref="dataSourceAspect" order="2"/>-->
+	</aop:config>
+
+	<import resource="spring-dict.xml"/>
+
+</beans>

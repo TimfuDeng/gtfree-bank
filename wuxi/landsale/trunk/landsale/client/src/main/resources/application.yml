@@ -1,0 +1,58 @@
+info:
+  name: center-server
+  component: Center Application Server
+
+spring:
+  datasource:
+#    url: jdbc:oracle:thin:@172.16.2.63:1521:orcl
+#    username: LANDSALE
+#    password: LANDSALE
+    url: jdbc:oracle:thin:@127.0.0.1:1521:orcl
+    username: SALE_WUXI
+    password: SALE_WUXI
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+#      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      ddl-auto: none
+#      ddl-auto: update
+  redis:
+    database: 0
+    host: 192.168.8.61
+    port: 6379
+  session:
+    store-type: redis
+  resources:
+    cache-period: 3600
+    chain:
+      cache: true
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+
+center:
+  server: 192.168.8.61:8003
+#  server: 172.16.2.63:8000
+
+app:
+  env:
+    base: http://192.168.8.61:7000
+    core: http://192.168.8.61:9001
+    storage: http://192.168.8.61:8892
+
+#是否ca登录
+ca:
+  login:
+    enabled: false
+
+server:
+  port: ${port:7001}
+
+logging:
+  pattern:
+    console: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([trace=%X{X-Trace-Id:-},span=%X{X-Span-Id:-}]){yellow} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wex'
+  level:
+    org.springframework: ERROR
+    cn.gtmap.landsale.core: DEBUG

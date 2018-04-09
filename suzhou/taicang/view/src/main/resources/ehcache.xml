@@ -1,0 +1,115 @@
+<ehcache updateCheck="false">
+    <diskStore path="java.io.tmpdir"/>
+
+    <!--<cacheManagerPeerProviderFactory
+            class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+            properties="peerDiscovery=automatic, multicastGroupAddress=230.0.0.1,
+multicastGroupPort=6102, timeToLive=32"/>
+        <cacheManagerPeerListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+                properties="port=6102,
+socketTimeoutMillis=2000"/>-->
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"/>
+        <cache
+                name="CrggServiceLandjsCache"
+                maxElementsInMemory="10000"
+                eternal="false"
+                timeToIdleSeconds="3"
+                timeToLiveSeconds="3"
+                overflowToDisk="true"
+                maxElementsOnDisk="10000000"
+                diskPersistent="false"
+                diskExpiryThreadIntervalSeconds="120"
+                memoryStoreEvictionPolicy="LRU">
+                <!--<cacheEventListenerFactory
+                        class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>-->
+        </cache>
+
+        <cache
+                name="RegionCache"
+                maxElementsInMemory="10000"
+                eternal="false"
+                timeToIdleSeconds="3"
+                timeToLiveSeconds="3"
+                overflowToDisk="true"
+                maxElementsOnDisk="10000000"
+                diskPersistent="false"
+                diskExpiryThreadIntervalSeconds="120"
+                memoryStoreEvictionPolicy="LRU">
+            <!--<cacheEventListenerFactory
+                    class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>-->
+        </cache>
+
+    <cache name="BankServiceCache" maxElementsInMemory="50"  eternal="false" timeToIdleSeconds="3" timeToLiveSeconds="3" overflowToDisk="false">
+        <!--<cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>-->
+    </cache>
+    <cache name="ResourceCache" maxElementsInMemory="500"  eternal="false" timeToIdleSeconds="3" timeToLiveSeconds="3" overflowToDisk="false">
+        <!--<cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>-->
+    </cache>
+    <cache name="ResourceQueryCache" maxElementsInMemory="500"  eternal="false" timeToIdleSeconds="3" timeToLiveSeconds="3" overflowToDisk="false">
+        <!--<cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>-->
+    </cache>
+    <cache name="TransResourceOfferServiceImplCache" maxElementsInMemory="2000"  eternal="false" timeToIdleSeconds="3" timeToLiveSeconds="3" overflowToDisk="false">
+        <!--<cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>-->
+    </cache>
+    <cache name="TransResourceOfferServicePageCache" maxElementsInMemory="100"  eternal="false" timeToIdleSeconds="3" timeToLiveSeconds="3" overflowToDisk="false">
+        <!--<cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>-->
+    </cache>
+    <cache
+            name="AuthorizationCache"
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+        <!--<cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>-->
+    </cache>
+    <cache
+            name="FileCache"
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+       <!--<cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>-->
+    </cache>
+
+    <cache
+            name="MaterialCenterCache"
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+        <!--<cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>-->
+    </cache>
+</ehcache>

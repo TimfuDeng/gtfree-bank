@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		  http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:application.properties"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="fileEncoding" value="utf-8"/>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+        <property name="useSuffixPatternMatch" value="false"/>
+    </bean>
+
+    <!-- 把标记了@Controller注解的类转换为bean -->
+    <context:component-scan base-package="cn.gtmap.landsale.admin.web.console"/>
+    <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 请求映射 -->
+    <bean id="jsonMessageConverter" class="cn.gtmap.egovplat.core.support.fastjson.FastjsonHttpMessageConverter"/>
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">-->
+        <!--<property name="messageConverters" ref="jsonMessageConverter"/>-->
+    <!--</bean>-->
+
+    <bean class="cn.gtmap.egovplat.core.support.spring.ResponseBodyHandlerExceptionResolver"/>
+
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView" value="common/500"/>
+        <property name="warnLogCategory" value="WARN"/>
+        <property name="defaultStatusCode" value="500"/>
+        <property name="statusCodes">
+            <props>
+                <prop key="common/500">500</prop>
+                <prop key="common/404">404</prop>
+            </props>
+        </property>
+        <property name="exceptionMappings">
+            <props>
+                <prop key="cn.gtmap.egovplat.core.ex">common/500</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                            <value>text/plain;charset=UTF-8</value>
+                            <value>application/json;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <!--<bean class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/>-->
+
+                <ref bean="jsonMessageConverter"/>
+            </list>
+        </property>
+        <property name="customArgumentResolvers">
+            <list>
+                <bean class="cn.gtmap.egovplat.core.support.spring.DataPageableHandlerMethodArgumentResolver"/>
+            </list>
+        </property>
+        <!--<property name="webBindingInitializer">-->
+            <!--&lt;!&ndash;<bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">&ndash;&gt;-->
+            <!--&lt;!&ndash;<property name="conversionService" ref="conversionService"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+            <!--<bean class="cn.gtmap.landsale.util.DateConverter"/>-->
+
+        <!--</property>-->
+        <property name="webBindingInitializer">
+            <bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+                <property name="conversionService" ref="conversionService"/>
+            </bean>
+        </property>
+    </bean>
+
+    <mvc:resources mapping="/static/**" location="/static/" cache-period="3600"/>
+    <mvc:default-servlet-handler/>
+    <mvc:interceptors>
+        <bean class="cn.gtmap.landsale.security.SecContextInterceptor">
+            <property name="redirectUrl" value="/admin/login"/>
+            <property name="needLogins" value="/console/**"/>
+            <property name="excludes" value="/static/**,/login,/logout,/file/**,/report/**"/>
+        </bean>
+        <bean class="cn.gtmap.landsale.security.AuthorizationInterceptor">
+            <property name="rootPath" value="landsale-urls"/>
+            <property name="privileges">
+                <map>
+                    <entry key="/console/**" value=""/>
+                </map>
+            </property>
+        </bean>
+    </mvc:interceptors>
+
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    </bean>
+
+    <!-- FreeMarker视图解析  -->
+    <bean id="freeMarkerViewResolver" class="cn.gtmap.egovplat.core.support.freemarker.FreeMarkerViewResolver">
+        <property name="order" value="1"/>
+        <property name="cache" value="true"/>
+        <property name="prefix" value="/views/"/>
+        <property name="suffix" value=".ftl"/>
+        <property name="contentType" value="text/html; charset=UTF-8"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+    </bean>
+
+    <bean name="/ServiceUtils" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" >
+            <ref bean="ServiceUtilsImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.ServiceUtils</value>
+        </property>
+    </bean>
+
+    <bean name="/TransCrggService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransCrggServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransCrggService</value>
+        </property>
+    </bean>
+
+
+
+  <!--  <bean name="/SuspendNoticeService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="SuspendNoticeServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.SuspendNoticeService</value>
+        </property>
+    </bean>-->
+
+  <!--  <bean name="/DealNoticeService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="DealNoticeServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.DealNoticeService</value>
+        </property>
+    </bean>-->
+
+    <bean name="/TransInteractCommunionService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransInteractCommunionServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransInteractCommunionService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransResourceService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransResourceServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransResourceService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransResourceInfoService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransResourceInfoServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransResourceInfoService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransResourceOfferService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransResourceOfferServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransResourceOfferService</value>
+        </property>
+    </bean>
+
+    <bean name="/ClientService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="ClientServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.ClientService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransResourceApplyService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransResourceApplyServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransResourceApplyService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransBankService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransBankServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransBankService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransBankAccountService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransBankAccountServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransBankAccountService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransUserService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransUserServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransUserService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransBankPayService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransBankPayServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransBankPayService</value>
+        </property>
+    </bean>
+    <bean name="/TransFileService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransFileServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransFileService</value>
+        </property>
+    </bean>
+
+    <bean name="/CaSvsService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="CaSvsServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.CaSvsService</value>
+        </property>
+    </bean>
+    <bean name="/TransUserUnionService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransUserUnionServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransUserUnionService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransUserApplyInfoService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransUserApplyInfoServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransUserApplyInfoService</value>
+        </property>
+    </bean>
+
+    <bean name="/RegionService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="RegionServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.RegionService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransGpsOffsetService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransGpsOffsetServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransGpsOffsetService</value>
+        </property>
+    </bean>
+
+    <bean name="/IdentityService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="IdentityServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.IdentityService</value>
+        </property>
+    </bean>
+
+    <bean name="/AttachmentCategoryService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="AttachmentCategoryServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.AttachmentCategoryService</value>
+        </property>
+    </bean>
+    <bean name="/TransResourceMinPriceService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransResourceMinPriceServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransResourceMinPriceService</value>
+        </property>
+    </bean>
+
+
+    <bean name="/MimeTypeService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="MimeTypeServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.MimeTypeService</value>
+        </property>
+    </bean>
+
+    <bean name="/AuditLogService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="AuditLogServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.AuditLogService</value>
+        </property>
+    </bean>
+
+
+
+    <bean name="/MaterialCenterService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="MaterialCenterServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.MaterialCenterService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransResourceSonService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransResourceSonServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransResourceSonService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransBuyQualifiedService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransBuyQualifiedServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransBuyQualifiedService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransMaterialService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransMaterialService"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransMaterialService</value>
+        </property>
+    </bean>
+
+    <bean name="/MaterialCrggService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="MaterialCrggService"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.MaterialCrggService</value>
+        </property>
+    </bean>
+
+    <bean name="/TransVerifyService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="TransVerifyServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransVerifyService</value>
+        </property>
+    </bean>
+
+    <bean name="/OneTargetService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="OneTargetServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.OneTargetService</value>
+        </property>
+    </bean>
+
+    <bean name="/OneApplyService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="OneApplyServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.OneApplyService</value>
+        </property>
+    </bean>
+
+    <bean name="/OnePriceLogService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="OnePriceLogServiceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.OnePriceLogService</value>
+        </property>
+    </bean>
+
+    <bean name="/LandUseDictSerivce" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service">
+            <ref bean="LandUseDictSerivceImpl"/>
+        </property>
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.LandUseDictSerivce</value>
+        </property>
+    </bean>
+
+
+
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+
+</beans>

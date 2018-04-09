@@ -1,0 +1,8 @@
+.topbar {
+    height: 43px;
+    line-height: 41px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1000;
+}
+

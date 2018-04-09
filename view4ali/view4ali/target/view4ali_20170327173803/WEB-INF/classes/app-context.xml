@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache" xmlns:util="http://www.springframework.org/schema/util"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:annotation-config/>
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:application.properties"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="fileEncoding" value="utf-8"/>
+    </bean>
+
+    <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache.xml"/>
+        <property name="shared" value="true"/>
+    </bean>
+
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="ehCacheManager"/>
+    </bean>
+
+    <bean id="TransCrggServiceImpl" class="cn.gtmap.landsale.service.impl.TransCrggServiceImpl">
+        <property name="crggMapper" ref="TransCrggMapper"/>
+    </bean>
+
+    <bean id="ResourceOfferServiceImpl" class="cn.gtmap.landsale.service.impl.ResourceOfferServiceImpl">
+        <property name="resourceOfferMapper" ref="ResourceOfferMapper"/>
+        <property name="resourceOfferRealContainer" ref="ResourceOfferRealContainer"/>
+    </bean>
+
+    <bean id="TransResourceServiceImpl" class="cn.gtmap.landsale.service.impl.TransResourceServiceImpl">
+        <property name="transResourceMapper" ref="TransResourceMapper"/>
+        <property name="cacheManager" ref="ehCacheManager"/>
+    </bean>
+
+    <!--以下为消息服务-->
+    <bean id="MessageConsumer" class="cn.gtmap.landsale.mq.MessageConsumer">
+        <property name="properties" >
+            <props>
+                <prop key="AccessKey">${aliyun.accessId}</prop>
+                <prop key="SecretKey">${aliyun.accessKey}</prop>
+                <prop key="ConsumerId">${mq.ConsumerId}</prop>
+                <prop key="ONSAddr">${mq.url}</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <bean id="ResourceOfferRealContainer" class="cn.gtmap.landsale.core.ResourceOfferRealContainer"/>
+    <import resource="app-mybatis.xml"/>
+</beans>

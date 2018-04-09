@@ -1,0 +1,123 @@
+@charset "utf-8";
+/* CSS Document */
+/*1.1 布局*/
+.wp{ width:1190px;}/*网页整体宽度*/
+/*1.2 文字*/
+a{color:#333}/*主链接颜色*/
+.sublink:link,.sublink:visited,.sublink:active{}/*次链颜色*/
+a:hover,a:focus,.c_main,.c_main a{color:#06c}/*链接经过颜色，主色调*/
+.c_sub,.c_sub a{}/*次文字颜色*/
+.c_title{}/*标题颜色*/
+.c_content{ color:#818181}/*内容文字颜色*/
+.c_Auxiliary{}/*辅助颜色*/
+
+.title-big{ font-size:22px; line-height:30px;}/*首屏标题*/
+.title-large{}
+
+/*2.1 头部*/
+.header{}
+/*2.1.1*/
+.logo{}
+/*2.1.2主导航*/
+/*2.2 尾部*/
+.footer{border-top:1px solid #E8E8E8;margin-top:20px;height:60px;font-family:tahoma,Arial;font-size:12px;color:#999;line-height:22px;text-align:center;background-color: #ededed;padding:13px}
+.footer p{padding-top:15px}
+.footer a,footer a:hover{color:#999}
+
+a:hover,a:focus{color:#f4523a}/*鼠标经过的颜色*/
+.c_primary,.c_primary a{ color:#f4523a} /*强调颜色*/
+.c_333,.c_333 a{ color:#333}/*灰色颜色*/
+.c_666,.c_666 a{ color:#666}/*灰色颜色*/
+.c-999,.c-999 a{ color:#999}/*灰色颜色*/
+.c_sub,.c_sub a{ color:#919090}/*次文字颜色*/
+.c_b0afae,.c_b0afae a{ color:#b0afae}/*次文字颜色*/
+.c_warry{ color:#c51900}
+.c_title{ font-size:24px}/*栏目标题*/
+.c_content{ color:#818181}/*内容文字颜色*/
+.c_2d2d2d{ color:#2d2d2d}
+.c_ff4a39{ color:#ff4a39}
+.c_f64c2e{ color:#f64c2e}
+.c_Auxiliary{}/*辅助颜色*/
+.c_f34a35{ color:#f34a35}
+.c_005dad{ color:#005dad}
+.c_0679ca{ color:#0679ca}
+.c-919190{ color:#919190}
+.c-ff543c{ color:#ff543c}
+
+.topbar a:hover{ text-decoration:none}
+.topLeft{ margin-left:-10px}
+.topLeft a{ padding:0 10px; display:inline-block}
+.topLeft a:hover{background-color:#fff;padding:0px 9px;border-left:1px solid #d6d6d6;border-left:1px solid rgba(0,0,0,0.15);border-right:1px solid #d6d6d6;border-right:1px solid rgba(0,0,0,0.15);}
+.topLeft a.active{ color:#f4523b; font-weight:bold}
+.topRight{display:inline-block;}
+.topRight li{ display:inline;}
+.topRight li>a{display: inline-block;padding:0px 10px;}
+.topRight li.bg-fff >a:hover{ background-color:#fff;padding:0px 9px;border-left:1px solid #d6d6d6;border-left:1px solid rgba(0,0,0,0.15);border-right:1px solid #d6d6d6;border-right:1px solid rgba(0,0,0,0.15);}
+
+
+
+.nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.nav > li {
+    position: relative;
+    display: block;
+}
+.nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+.nav > li > a:hover,
+.nav > li > a:focus {
+    text-decoration: none;
+    background-color: #eee;
+}
+.nav > li.disabled > a {
+    color: #777;
+}
+.nav > li.disabled > a:hover,
+.nav > li.disabled > a:focus {
+    color: #777;
+    text-decoration: none;
+    cursor: not-allowed;
+    background-color: transparent;
+}
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
+    background-color: #eee;
+    border-color: #337ab7;
+}
+.nav .nav-divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+.nav > li > a > img {
+    max-width: none;
+}
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
+    color: #fff;
+    background-color: #999999;
+}
+
+.nav-separator{border-bottom:1px solid #ececec; border-top:0;  float: left; margin:5px 0px  }
+
+.breadcrumb {
+    background-color: #F5F5F5;
+}
+
+#pageNav .active{
+    background-color: #ba2f2f;
+    color: #ffffff;
+}
+
+#pageNav a{
+    text-decoration: none;
+}

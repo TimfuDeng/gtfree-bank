@@ -1,0 +1,89 @@
+
+spring:
+  application:
+    name: core-server
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+  jpa:
+    properties:
+      javax:
+        persistence:
+          validation:
+            mode: NONE
+      use_streams_for_binary: true
+      hibernate:
+        current_session_context_class: thread
+        default_batch_fetch_size: 8
+        max_fetch_depth: 2
+        jdbc:
+          fetch_size: 50
+          batch_size: 25
+        archive:
+          autodetection: class
+        query:
+          startup_check: false
+        cache:
+          auto_evict_collection_cache: false
+          use_structured_entries: true
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+
+
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://${center.server}/eureka/
+    healthcheck:
+      enabled: true
+
+com:
+  zipkin:
+    serviceName: core-server
+    url: http://127.0.0.1:9411
+    connectTimeout: 6000
+    readTimeout: 6000
+    flushInterval: 1
+    compressionEnabled: true
+
+file:
+  maxUploadSize: 10485760
+multipart:
+  maxFileSize: 100Mb
+  maxRequestSize: 1000Mb
+
+
+hystrix:
+  threadpool:
+    default:
+      coreSize: 5000 #缺省为10
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 100000 #缺省为1000
+  config:
+      stream:
+        maxConcurrentConnections: 50
+
+javamd:
+  monitor:
+    enable: true
+
+feign:
+  httpclient:
+    enabled:  false
+
+ribbon:
+  eureka:
+    enabled: true
+

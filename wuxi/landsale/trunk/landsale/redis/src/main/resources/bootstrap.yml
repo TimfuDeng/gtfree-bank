@@ -1,0 +1,23 @@
+
+spring:
+  application:
+    name: redis-server
+
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://${center.server}/eureka/
+    healthcheck:
+      enabled: true
+
+feign:
+  httpclient:
+    enabled:  false
+
+ribbon:
+  eureka:
+    enabled: true
+

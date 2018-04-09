@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.gtmap.landsale.mapper.TransResourceMapper">
+    <resultMap id="BaseResultMap" type="cn.gtmap.landsale.model.TransResource">
+        <id column="resource_id" jdbcType="VARCHAR" property="resourceId"/>
+        <result column="gg_id" jdbcType="VARCHAR" property="ggId"/>
+        <result column="resource_code" jdbcType="VARCHAR" property="resourceCode"/>
+        <result column="resource_location" jdbcType="VARCHAR" property="resourceLocation"/>
+        <result column="region_code" jdbcType="VARCHAR" property="regionCode"/>
+        <result column="resource_type" jdbcType="SMALLINT" property="resourceType"/>
+        <result column="bm_begin_time" jdbcType="TIMESTAMP" property="bmBeginTime"/>
+        <result column="bm_end_time" jdbcType="TIMESTAMP" property="bmEndTime"/>
+        <result column="gp_begin_time" jdbcType="TIMESTAMP" property="gpBeginTime"/>
+        <result column="gp_end_time" jdbcType="TIMESTAMP" property="gpEndTime"/>
+        <result column="bzj_begin_time" jdbcType="TIMESTAMP" property="bzjBeginTime"/>
+        <result column="bzj_end_time" jdbcType="TIMESTAMP" property="bzjEndTime"/>
+        <result column="xs_begin_time" jdbcType="TIMESTAMP" property="xsBeginTime"/>
+        <result column="cr_area" jdbcType="DOUBLE" property="crArea"/>
+        <result column="begin_offer" jdbcType="DOUBLE" property="beginOffer"/>
+        <result column="fixed_offer" jdbcType="DOUBLE" property="fixedOffer"/>
+        <result column="add_offer" jdbcType="DOUBLE" property="addOffer"/>
+        <result column="land_use" jdbcType="VARCHAR" property="landUse"/>
+        <result column="geometry" jdbcType="VARCHAR" property="geometry"/>
+        <result column="attachments" jdbcType="INTEGER" property="attachments"
+                typeHandler="cn.gtmap.landsale.support.JSONHandler"/>
+        <result column="others" jdbcType="INTEGER" property="others"
+                typeHandler="cn.gtmap.landsale.support.JSONHandler"/>
+        <result column="trans_user" jdbcType="VARCHAR" property="transUser"/>
+        <result column="over_status" jdbcType="VARCHAR" property="overStatus"/>
+    </resultMap>
+
+    <sql id="Column_All">
+    resource_id, gg_id, resource_code, resource_location, region_code,resource_type,
+    bm_begin_time,bm_end_time,gp_begin_time,gp_end_time,bzj_begin_time,bzj_end_time,xs_begin_time,
+    cr_area,begin_offer,fixed_offer,add_offer,land_use,geometry,attachments,others,trans_user,over_status
+  </sql>
+
+    <select id="selectByKey" resultMap="BaseResultMap">
+        select
+        <include refid="Column_All"/>
+        from trans_resource
+        where resource_id = #{resourceId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPage"  resultMap="BaseResultMap">
+        select
+        <include refid="Column_All"/>
+        from trans_resource
+        where 1=1
+        <if test="condition.name != null">
+            and resource_code like  '%' || #{condition.name} || '%'
+        </if>
+        <if test="condition.region != null">
+            and region_code like  #{condition.region} || '%'
+        </if>
+        <if test="condition.use ==1">
+            and land_use != '06'
+        </if>
+        <if test="condition.use ==2">
+            and land_use = '06'
+        </if>
+        <if test="condition.status ==1">
+            and bm_begin_time &lt; #{time} and bm_end_time &gt; #{time} and over_status is null
+        </if>
+        <if test="condition.status ==2">
+            and gp_begin_time &lt; #{time} and gp_end_time &gt; #{time} and over_status is null
+        </if>
+        <if test="condition.status ==3">
+            and gp_end_time &lt; #{time}  and over_status is null
+        </if>
+        <if test="condition.status ==4">
+            and over_status is not null
+        </if>
+        order by gp_begin_time desc,resource_id
+        limit #{limit,jdbcType=INTEGER}
+        offset #{offset,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectCount"  resultType="int">
+        select count(1) from trans_resource
+        where 1=1
+        <if test="condition.name != null">
+            and resource_code like  '%' || #{condition.name} || '%'
+        </if>
+        <if test="condition.region != null">
+            and region_code like  #{condition.region} || '%'
+        </if>
+        <if test="condition.use ==1">
+            and land_use != '06'
+        </if>
+        <if test="condition.use ==2">
+            and land_use = '06'
+        </if>
+        <if test="condition.status ==1">
+            and bm_begin_time &lt; #{time} and bm_end_time &gt; #{time} and over_status is null
+        </if>
+        <if test="condition.status ==2">
+            and gp_begin_time &lt; #{time} and gp_end_time &gt; #{time} and over_status is null
+        </if>
+        <if test="condition.status ==3">
+            and gp_end_time &lt; #{time} and over_status is null
+        </if>
+        <if test="condition.status ==4">
+            and over_status is not null
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="cn.gtmap.landsale.model.TransResource">
+        insert into trans_resource
+        (resource_id, gg_id, resource_code, resource_location, region_code,resource_type,
+    bm_begin_time,bm_end_time,gp_begin_time,gp_end_time,bzj_begin_time,bzj_end_time,xs_begin_time,
+    cr_area,begin_offer,fixed_offer,add_offer,land_use,geometry,attachments,others,trans_user,over_status)
+        values (#{resourceId,jdbcType=VARCHAR},
+        #{ggId,jdbcType=VARCHAR},
+        #{resourceCode,jdbcType=VARCHAR},
+        #{resourceLocation,jdbcType=VARCHAR},
+        #{regionCode,jdbcType=VARCHAR},
+        #{resourceType,jdbcType=VARCHAR},
+        #{bmBeginTime,jdbcType=TIMESTAMP},
+        #{bmEndTime,jdbcType=TIMESTAMP},
+        #{gpBeginTime,jdbcType=TIMESTAMP},
+        #{gpEndTime,jdbcType=TIMESTAMP},
+        #{bzjBeginTime,jdbcType=TIMESTAMP},
+        #{bzjEndTime,jdbcType=TIMESTAMP},
+        #{xsBeginTime,jdbcType=TIMESTAMP},
+        #{crArea,jdbcType=DOUBLE},
+        #{beginOffer,jdbcType=DOUBLE},
+        #{fixedOffer,jdbcType=DOUBLE},
+        #{addOffer,jdbcType=DOUBLE},
+        #{landUse,jdbcType=VARCHAR},
+        #{geometry,jdbcType=VARCHAR},
+        #{attachments,jdbcType=VARCHAR,typeHandler=cn.gtmap.landsale.support.JSONHandler},
+        #{others,jdbcType=VARCHAR,typeHandler=cn.gtmap.landsale.support.JSONHandler},
+         #{transUser,jdbcType=VARCHAR},
+         #{overStatus,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="update" parameterType="cn.gtmap.landsale.model.TransResource">
+        update trans_resource SET
+        resource_id=#{resourceId,jdbcType=VARCHAR},
+        gg_id=#{ggId,jdbcType=VARCHAR},
+        resource_code=#{resourceCode,jdbcType=VARCHAR},
+        resource_location=#{resourceLocation,jdbcType=VARCHAR},
+        region_code=#{regionCode,jdbcType=VARCHAR},
+        resource_type=#{resourceType,jdbcType=VARCHAR},
+        bm_begin_time=#{bmBeginTime,jdbcType=TIMESTAMP},
+        bm_end_time=#{bmEndTime,jdbcType=TIMESTAMP},
+        gp_begin_time=#{gpBeginTime,jdbcType=DATE},
+        gp_end_time=#{gpEndTime,jdbcType=TIMESTAMP},
+        bzj_begin_time=#{bzjBeginTime,jdbcType=TIMESTAMP},
+        bzj_end_time=#{bzjEndTime,jdbcType=TIMESTAMP},
+        xs_begin_time=#{xsBeginTime,jdbcType=TIMESTAMP},
+        cr_area=#{crArea,jdbcType=DOUBLE},
+        begin_offer=#{beginOffer,jdbcType=DOUBLE},
+        fixed_offer=#{fixedOffer,jdbcType=DOUBLE},
+        add_offer=#{addOffer,jdbcType=DOUBLE},
+        land_use=#{landUse,jdbcType=VARCHAR},
+        geometry=#{geometry,jdbcType=VARCHAR},
+        attachments=#{attachments,jdbcType=VARCHAR,typeHandler=cn.gtmap.landsale.support.JSONHandler},
+        trans_user=#{transUser,jdbcType=VARCHAR},
+        others=#{others,jdbcType=VARCHAR,typeHandler=cn.gtmap.landsale.support.JSONHandler},
+        over_status=#{overStatus,jdbcType=VARCHAR},
+        where gg_id = #{ggId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateStatusToFinish">
+        update trans_resource SET
+        trans_user = #{transUser,jdbcType=VARCHAR},
+        over_status=#{overStatus,jdbcType=VARCHAR}
+        where resource_id = #{resourceId,jdbcType=VARCHAR}
+    </update>
+</mapper>

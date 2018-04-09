@@ -1,0 +1,36 @@
+info:
+  name: bank-server
+  component: Bank Application Server
+
+spring:
+  datasource:
+#    url: jdbc:oracle:thin:@172.16.2.63:1521:orcl
+#    username: LANDSALE
+#    password: LANDSALE
+    url: jdbc:oracle:thin:@127.0.0.1:1521:orcl
+    username: SALE_WUXI
+    password: SALE_WUXI
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+#      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      ddl-auto: none
+#      ddl-auto: update
+
+center:
+  server: 192.168.8.61:8003
+
+#银行接口的端口
+banksocket:
+  port: 5106
+
+server:
+  port: ${port:2000}
+
+logging:
+  pattern:
+    console: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([trace=%X{X-Trace-Id:-},span=%X{X-Span-Id:-}]){yellow} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wex'
+  level:
+    org.springframework: ERROR
+    cn.gtmap.landsale.admin: ERROR2、

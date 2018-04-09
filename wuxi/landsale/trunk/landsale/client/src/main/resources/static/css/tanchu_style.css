@@ -1,0 +1,237 @@
+/* CSS Document */
+
+body{
+	width:100%;
+	height:100%;
+	margin:0;
+	padding:0;
+	font-family:"微软雅黑";}
+	
+p{
+	margin:0;
+	padding:0;}
+	
+ul{
+	margin:0;
+	padding:0;}
+	
+li{
+	margin:0;
+	padding:0;}
+	
+	
+.tb_main{
+	width:1200px;
+	height:800px;
+	margin:0 auto;}
+	
+.tb_main_up{
+	width:1138px;
+	height:132px;
+	margin:9px auto 0 auto;}
+	
+	
+
+	
+	
+.tb_main_up_left{
+	width:530px;
+	height:132px;
+	float:left;
+	background-image:url(../images/bg_tb.png);}
+	
+	
+.tb_main_up_left ul{
+	list-style:none;
+	margin-left:15px;}
+	
+.tb_main_up_left ul li{
+	display:block;
+	height:33px;
+	line-height:33px;}
+	
+.tb_main_up_left ul li img{
+	margin-top:11px;
+	float:left;
+	margin-right:10px;}
+	
+.tb_main_up_left ul li p{
+	display:block;
+	line-height:33px;
+	font-family:"微软雅黑";
+	font-size:14px;
+	color:#999999;
+	float:left;
+	margin-bottom:0px;}
+	
+.tb_main_up_left ul li span{
+	display:block;
+	height:33px;
+	line-height:33px;
+	font-family:"微软雅黑";
+	font-size:20px;
+	color:#333333;
+	float:left;}
+	
+.tb_main_up_left_title{
+	width:560px;
+	height:33px;}
+	
+.tb_main_up_left_title img{
+	margin-top:8px;
+	margin-right:12px;
+	float:left;}
+	
+.tb_main_up_left_title p{
+	font-size:16px;
+	color:#2f8bd3;
+	line-height:33px;
+	font-family:"微软雅黑";}
+	
+.tb_main_up_right{
+	width:590px;
+	height:132px;
+	float:right;
+	background-image:url(../images/bg_tb.png);}
+	
+	
+	
+	
+.tb_main_up_right ul{
+	display:block;
+	list-style:none;
+	margin-left:15px;
+	float:left;
+	width:280px;}
+	
+.tb_main_up_right ul li{
+	display:block;
+	height:33px;
+	line-height:33px;}
+	
+	
+.tb_main_up_right ul li p{
+	display:block;
+	line-height:33px;
+	font-family:"微软雅黑";
+	font-size:14px;
+	color:#999999;
+	float:left;
+	margin-bottom:0px;}
+	
+.tb_main_up_right ul li span{
+	display:block;
+	line-height:33px;
+	font-family:"微软雅黑";
+	font-size:14px;
+	color:#333333;
+	float:left;}
+	
+	
+	
+	
+	
+	
+.tb_main_middle{
+	width:1138px;
+	height:125px;
+	margin:5px auto 0 auto;}
+	
+.tb_main_middle_title{
+	width:1138px;
+	height:33px;}
+	
+.tb_main_middle_title img{
+	margin-top:8px;
+	margin-right:12px;
+	float:left;}
+	
+.tb_main_middle_title p{
+	font-size:16px;
+	color:#2f8bd3;
+	line-height:33px;
+	font-family:"微软雅黑";}
+	
+.tb_main_middle_inner{
+	width:1136px;
+	height:90px;
+	background-color:#e6f2fc;
+	border:1px solid #d5e3fa;}
+	
+	
+.tb_main_middle_inner p{
+	display:block;
+	float:left;
+	font-family:"微软雅黑";
+	line-height:90px;
+	font-size:19px;
+	font-weight:bold;
+	color:#666666;
+	margin-left:30px;}
+	
+	
+.tb_main_middle_inner input{
+	width:268px;
+	height:45px;
+	margin-top:25px;
+	margin-left:35px;
+	float:left;}
+	
+#up{
+	background-image:url(../images/up.png);
+	width:45px;
+	height:45px;
+	float:left;
+	margin-left:10px;
+	border:none;
+	cursor:pointer;}
+	
+#down{
+	margin-left:5px;
+	background-image:url(../images/down.png);
+	width:45px;
+	height:45px;
+	float:left;
+	border:none;
+	cursor:pointer;}
+	
+	
+#start{
+	border:none;
+	/*background-color:#2f8bd3;*/
+	width:145px;
+	height:45px;
+	border-radius:3px;
+	color:#ffffff;
+	font-family:"微软雅黑";
+	font-size:17px;
+	cursor:pointer;}
+
+.currency{
+	float: left;
+	font-size: 16px;
+	font-style: normal !important;
+}
+
+.message_span{
+	height:25px;line-height:25px;margin: 30px 0 0 10px;
+}
+
+.yh_span{
+	float:left;height:73px;line-height:25px;margin: 6px 0 0 10px; width: 280px;
+	overflow-wrap: break-word; white-space: pre-wrap; word-break: normal;
+}
+
+.time em{
+	font-weight: 400;
+	font-style: normal;
+	color: #666;
+	font-size: 15px;
+	margin-left: 3px;
+}
+.time var{
+	font-size: 25px;
+	font-style: normal;
+	font-weight: bold;
+	margin-left: 3px;
+}

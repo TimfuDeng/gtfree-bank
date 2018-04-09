@@ -1,0 +1,47 @@
+info:
+  name: core-server
+  component: Core Application Server
+
+spring:
+  datasource:
+#    url: jdbc:oracle:thin:@172.16.2.63:1521:orcl
+#    username: LANDSALE
+#    password: LANDSALE
+    url: jdbc:oracle:thin:@127.0.0.1:1521:orcl
+    username: SALE_WUXI
+    password: SALE_WUXI
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+#      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      ddl-auto: none
+#      ddl-auto: create
+#  redis:
+#    host: 192.168.90.8
+#    port: 6379
+
+center:
+  server: 192.168.8.61:8003
+#  server: 172.16.2.63:8000
+
+#CA-SVS签名验证服务地址
+#CA-PCS密码运算服务地址
+ca:
+  svs:
+    url: http://172.16.2.161:9188
+  pcs:
+    url: http://172.16.2.161:9178
+
+server:
+  port: ${port:9001}
+
+fileStore:
+  directory: /upload
+
+logging:
+  pattern:
+    console: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([trace=%X{X-Trace-Id:-},span=%X{X-Span-Id:-}]){yellow} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wex'
+  level:
+    org.springframework: INFO
+    cn.gtmap.landsale.core: ERROR

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+
+    <bean id="ServiceUtils" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.ServiceUtils</value>
+        </property>
+        <property name="serviceUrl">
+            <value>${admin.url}/ServiceUtils</value>
+        </property>
+    </bean>
+    <bean id="AuditLogService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.AuditLogService</value>
+        </property>
+        <property name="serviceUrl">
+            <value>${admin.url}/AuditLogService</value>
+        </property>
+    </bean>
+
+    <bean id="OneTargetService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.OneTargetService</value>
+        </property>
+        <property name="serviceUrl">
+            <value>${admin.url}/OneTargetService</value>
+        </property>
+    </bean>
+
+    <bean id="SysUserService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.SysUserService</value>
+        </property>
+        <property name="serviceUrl">
+            <value>${admin.url}/SysUserService</value>
+        </property>
+    </bean>
+
+    <bean id="SysCakeyService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.SysCakeyService</value>
+        </property>
+        <property name="serviceUrl">
+            <value>${admin.url}/SysCakeyService</value>
+        </property>
+    </bean>
+
+    <bean id="CaSvsService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.CaSvsService</value>
+        </property>
+        <property name="serviceUrl">
+            <value>${admin.url}/CaSvsService</value>
+        </property>
+    </bean>
+
+    <bean id="OnePriceLogService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.OnePriceLogService</value>
+        </property>
+        <property name="serviceUrl">
+            <value>${admin.url}/OnePriceLogService</value>
+        </property>
+    </bean>
+
+    <bean id="TransLicenseService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransLicenseService</value>
+        </property>
+        <property name="serviceUrl">
+            <value>${admin.url}/TransLicenseService</value>
+        </property>
+    </bean>
+
+    <bean id="TransResultLogService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransResultLogService</value>
+        </property>
+        <property name="serviceUrl">
+            <value>${admin.url}/TransResultLogService</value>
+        </property>
+    </bean>
+
+    <bean id="OneApplyService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.OneApplyService</value>
+        </property>
+        <property name="serviceUrl">
+            <value>${admin.url}/OneApplyService</value>
+        </property>
+    </bean>
+
+    <bean id="TransOfferLogService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransOfferLogService</value>
+        </property>
+        <property name="serviceUrl">
+            <value>${admin.url}/TransOfferLogService</value>
+        </property>
+    </bean>
+
+    <bean id="TransBidderService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.service.TransBidderService</value>
+        </property>
+        <property name="serviceUrl">
+            <value>${admin.url}/TransBidderService</value>
+        </property>
+    </bean>
+
+
+
+
+
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <bean class="cn.gtmap.landsale.log.AuditLogServiceAspect">
+        <property name="auditLogService" ref="AuditLogService"/>
+    </bean>
+</beans>

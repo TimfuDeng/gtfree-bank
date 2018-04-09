@@ -1,0 +1,21 @@
+
+spring:
+  application:
+    name: center-server
+
+eureka:
+  instance:
+    hostname: localhost
+  server:
+    enableSelfPreservation: false
+    waitTimeInMsWhenSyncEmpty: 0
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  dashboard:
+    enabled: true
+
+ribbon:
+  eureka:
+    enabled: true
+

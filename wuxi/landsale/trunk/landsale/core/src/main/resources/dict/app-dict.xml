@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="AttachmentCategoryServiceImpl" class="cn.gtmap.landsale.core.service.impl.AttachmentCategoryServiceImpl">
+        <property name="applyAttachmentCategory">
+            <map>
+                <entry>
+                    <key><value>FDDBRSFZJ</value></key>
+                    <value>法定代表人有效身份证件</value>
+                </entry>
+                <entry>
+                    <key><value>STRSFZJ</value></key>
+                    <value>受托人有效身份证件</value>
+                </entry>
+                <entry>
+                    <key><value>YYZZ</value></key>
+                    <value>有效营业执照副本</value>
+                </entry>
+                <entry>
+                    <key><value>SQWTS</value></key>
+                    <value>授权委托书</value>
+                </entry>
+                <entry>
+                    <key><value>DWQTZMCL</value></key>
+                    <value>其他证明材料(单位)</value>
+                </entry>
+            </map>
+        </property>
+        <property name="resourceAttachmentCategory">
+            <map>
+                <entry>
+                    <key><value>CRGG</value></key>
+                    <value>出让公告</value>
+                </entry>
+                <entry>
+                    <key><value>JMXZ</value></key>
+                    <value>竞买须知</value>
+                </entry>
+                <entry>
+                    <key><value>YDHXT</value></key>
+                    <value>用地红线图</value>
+                </entry>
+                <entry>
+                    <key><value>GHTJ</value></key>
+                    <value>规划条件</value>
+                </entry>
+                <entry>
+                    <key><value>KCDJT</value></key>
+                    <value>勘测定界图</value>
+                </entry>
+                <entry>
+                    <key><value>JCSSH</value></key>
+                    <value>基础设施函</value>
+                </entry>
+                <entry>
+                    <key><value>JSXMGHSJTJ</value></key>
+                    <value>建设项目规划设计条件</value>
+                </entry>
+                <entry>
+                    <key><value>FGBMYJ</value></key>
+                    <value>发改（经贸、外贸）部门意见</value>
+                </entry>
+                <entry>
+                    <key><value>HBBMYJ</value></key>
+                    <value>环保部门意见</value>
+                </entry>
+                <entry>
+                    <key><value>ZDT</value></key>
+                    <value>宗地图</value>
+                </entry>
+                <entry>
+                    <key><value>WZSYT</value></key>
+                    <value>地块位置示意图</value>
+                </entry>
+
+                <entry>
+                    <key><value>CRHTJFJ</value></key>
+                    <value>出让合同及附件</value>
+                </entry>
+                <entry>
+                    <key><value>CYFZJGXY</value></key>
+                    <value>产业发展监管协议</value>
+                </entry>
+                <entry>
+                    <key><value>QT</value></key>
+                    <value>其他</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="OneParamServiceImpl" class="cn.gtmap.landsale.admin.service.impl.OneParamServiceImpl" />
+    <bean id="OneTargetServiceImpl" class="cn.gtmap.landsale.admin.service.impl.OneTargetServiceImpl" />
+    <bean id="OnePriceLogServiceImpl" class="cn.gtmap.landsale.admin.service.impl.OnePriceLogServiceImpl" />
+    <bean id="OneApplyServiceImpl" class="cn.gtmap.landsale.admin.service.impl.OneApplyServiceImpl" />
+    <bean id="OneRoleServiceImpl" class="cn.gtmap.landsale.admin.service.impl.OneRoleServiceImpl" />
+
+    <bean id="TransResourceApplyServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransResourceApplyServiceImpl"/>
+
+    <bean id="ServiceUtilsImpl" class="cn.gtmap.landsale.admin.service.impl.ServiceUtilsImpl"/>
+
+    <bean id="TransCaUserServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransCaUserServiceImpl"/>
+
+    <bean id="TransCrggServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransCrggServiceImpl"/>
+
+    <bean id="TransResourceServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransResourceServiceImpl"/>
+
+    <bean id="TransResourceOfferServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransResourceOfferServiceImpl"/>
+
+    <bean id="TransBankServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransBankServiceImpl"/>
+
+    <bean id="TransBankAccountServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransBankAccountServiceImpl"/>
+
+    <bean id="TransBankPayServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransBankPayServiceImpl"/>
+
+    <bean id="TransResourceInfoServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransResourceInfoServiceImpl"/>
+
+    <bean id="TransUserUnionServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransUserUnionServiceImpl"/>
+
+    <bean id="TransResourceMinPriceServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransResourceMinPriceServiceImpl"/>
+
+    <bean id="ClientServiceImpl" class="cn.gtmap.landsale.admin.service.impl.ClientServiceImpl">
+        <property name="transResourceService"  ref="TransResourceServiceImpl"/>
+        <property name="transResourceOfferService" ref="TransResourceOfferServiceImpl"/>
+        <property name="transBankAccountService" ref="TransBankAccountServiceImpl"/>
+        <property name="transResourceApplyService" ref="TransResourceApplyServiceImpl"/>
+        <property name="transBankService" ref="TransBankServiceImpl"/>
+        <property name="transBankInterfaceService" ref="TransBankInterfaceServiceImpl"/>
+        <property name="transCaUserService" ref="TransCaUserServiceImpl"/>
+    </bean>
+
+    <bean id="HttpClientFactory" class="cn.gtmap.egovplat.core.support.http.HttpClientFactoryBean">
+        <property name="maxTotalConnections" value="200"/>
+        <property name="timeout" value="60000"/>
+    </bean>
+
+    <bean id="CrggServiceLandjsImplSz" class="cn.gtmap.landsale.admin.service.impl.CrggServiceLandjsImplSz">
+        <property name="httpClient" ref="HttpClientFactory"/>
+        <property name="baseUrl" value="http://www.landjs.com/"/>
+        <property name="crggUrl" value="LandjsInterface/LandjsStandard.asmx/LandjsRequest"/>
+        <property name="attachmentUrl" value="web/"/>
+        <property name="crggContentUrl" value="web/gp_gg.aspx"/>
+        <property name="passWord" value="123456"/>
+        <property name="userName" value="gtmap"/>
+        <property name="transCrggService" ref="TransCrggServiceImpl"/>
+        <property name="transFileService" ref="TransFileServiceImpl"/>
+        <property name="transResourceService" ref="TransResourceServiceImpl"/>
+        <property name="transResourceInfoService" ref="TransResourceInfoServiceImpl"/>
+        <property name="transGpsOffsetService" ref="TransGpsOffsetServiceImpl"/>
+        <property name="crggService" ref="CrggServiceLandjs"/>
+    </bean>
+
+    <bean id="CrggServiceLandjs" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>cn.gtmap.landsale.admin.service.CrggService</value>
+        </property>
+        <property name="serviceUrl">
+            <value>http://112.21.191.133:83/admin/CrggServiceLandjs</value>
+        </property>
+    </bean>
+
+    <bean id="FileStoreServiceImpl" class="cn.gtmap.landsale.admin.service.impl.FileStoreServiceImpl">
+        <property name="baseDir" value="${fileStore.directory}"/>
+    </bean>
+    <bean id="TransFileServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransFileServiceImpl">
+        <property name="fileStoreService" ref="FileStoreServiceImpl"/>
+        <property name="allowedFileType">
+            <set>
+                <value>jpg</value>
+                <value>jpeg</value>
+                <value>png</value>
+                <value>gif</value>
+                <value>bmp</value>
+                <value>pdf</value>
+                <value>zip</value>
+                <value>rar</value>
+                <value>doc</value>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="SmsMessageServiceImpl" class="cn.gtmap.landsale.admin.service.impl.SmsMessageServiceImpl">
+        <property name="spUrl" value="${sp.url}"/>
+        <property name="httpClient" ref="HttpClientFactory"/>
+    </bean>
+    <bean id="EmailMessageServiceImpl" class="cn.gtmap.landsale.admin.service.impl.EmailMessageServiceImpl">
+        <property name="javaMailSender">
+            <bean class="org.springframework.mail.javamail.JavaMailSenderImpl">
+                <property name="host" value="smtp.gtmap.cn"/>
+                <property name="username" value=""/>
+                <property name="password" value=""/>
+                <property name="protocol" value="smtp"/>
+                <property name="defaultEncoding" value="UTF-8"/>
+                <property name="javaMailProperties">
+                    <props>
+                        <prop key="mail.pop3.timeout">25000</prop>
+                    </props>
+                </property>
+            </bean>
+        </property>
+        <property name="sender" value=""/>
+    </bean>
+    <bean id="AttachmentCategoryServiceImpl" class="cn.gtmap.landsale.admin.service.impl.AttachmentCategoryServiceImpl">
+        <property name="applyAttachmentCategory">
+            <map>
+                <entry>
+                    <key><value>SFZJ</value></key>
+                    <value>有效身份证件</value>
+                </entry>
+                <entry>
+                    <key><value>YYZZ</value></key>
+                    <value>有效营业执照副本</value>
+                </entry>
+                <entry>
+                    <key><value>QTZMCL</value></key>
+                    <value>其他需提交的证明材料</value>
+                </entry>
+            </map>
+        </property>
+        <property name="resourceAttachmentCategory">
+            <map>
+                <entry>
+                    <key><value>CRGG</value></key>
+                    <value>出让公告</value>
+                </entry>
+                <entry>
+                    <key><value>JMXZ</value></key>
+                    <value>竞买须知</value>
+                </entry>
+                <entry>
+                    <key><value>YDHXT</value></key>
+                    <value>用地红线图</value>
+                </entry>
+                <entry>
+                    <key><value>GHTJ</value></key>
+                    <value>规划条件</value>
+                </entry>
+                <entry>
+                    <key><value>KCDJT</value></key>
+                    <value>勘测定界图</value>
+                </entry>
+                <entry>
+                    <key><value>JCSSH</value></key>
+                    <value>基础设施函</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="TransUserServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransUserServiceImpl">
+        <property name="clientVisible" value="${user.client.visible}"/>
+        <property name="urlResources">
+            <set>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>首页</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/index</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>出让公告</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/crgg/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>出让公告导入</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/landMarket/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>出让地块列表</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/resource/list/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>地块查看</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/resource/view</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>地块编辑</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/resource/edit/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>地块申请发布</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/resource/status/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>地块发布</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/resource/status/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>地块中止与终止</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/resource/status/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>地块退回编辑与重启</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/resource/status/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>人员管理</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/user/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>CA注册管理</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/ca-user/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>银行管理</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/bank/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>交易大屏幕</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/trans/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>底价管理</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/price/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>财务管理</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/money/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>日志管理</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/log/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>地块竞买人信息</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/resource-apply/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>保证金查询</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/console/bail/**</value>
+                    </entry>
+                </map>
+                <map>
+                    <entry>
+                        <key><value>name</value></key>
+                        <value>资格前审</value>
+                    </entry>
+                    <entry>
+                        <key><value>url</value></key>
+                        <value>/zgqs_temp_aaa/**</value>
+                    </entry>
+                </map>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="CaSvsServiceImpl" class="cn.gtmap.landsale.admin.service.impl.CaSvsServiceImpl">
+        <property name="httpClient" ref="HttpClientFactory"/>
+        <property name="baseUrl" value="${ca.svs.url}"/>
+    </bean>
+
+    <bean id="CaPcsServiceImpl" class="cn.gtmap.landsale.admin.service.impl.CaPcsServiceImpl">
+        <property name="httpClient" ref="HttpClientFactory"/>
+        <property name="baseUrl" value="${ca.pcs.url}"/>
+    </bean>
+
+    <bean id="AuthorizationServiceImpl" class="cn.gtmap.landsale.admin.service.impl.AuthorizationServiceImpl">
+        <property name="transUserService" ref="TransUserServiceImpl"/>
+    </bean>
+
+    <bean id="TransUserApplyInfoServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransUserApplyInfoServiceImpl">
+    </bean>
+
+    <bean id="RegionServiceImpl" class="cn.gtmap.landsale.admin.service.impl.RegionServiceImpl">
+        <property name="regionAllList" ref="RegionAllList"/>
+        <property name="defaultRegionCode" value="${region.code}"/>
+        <property name="defaultRegionName" value="${region.name}"/>
+        <property name="websiteICP" value="${website.icp}"/>
+    </bean>
+
+    <bean id="TransGpsOffsetServiceImpl" class="cn.gtmap.landsale.admin.service.impl.TransGpsOffsetServiceImpl">
+        <property name="latOffset" value="${offset.lat}"/>
+        <property name="lngOffset" value="${offset.lng}"/>
+    </bean>
+
+    <bean id="AuditLogServiceImpl" class="cn.gtmap.landsale.admin.service.impl.AuditLogServiceImpl"/>
+    <bean id="IdentityServiceImpl" class="cn.gtmap.landsale.admin.service.impl.IdentityServiceImpl">
+        <property name="transUserService" ref="TransUserServiceImpl"/>
+        <property name="caSvsService" ref="CaSvsServiceImpl"/>
+    </bean>
+
+    <bean class="cn.gtmap.landsale.log.AuditLogServiceAspect">
+        <property name="auditLogService" ref="AuditLogServiceImpl"/>
+    </bean>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <bean class="cn.gtmap.landsale.core.DynamicDataSourceAspect"/>
+    <bean class="cn.gtmap.landsale.core.SmsMessageAspect"/>
+    <bean class="cn.gtmap.landsale.core.AmqpMessageAspect"/>
+    <bean id="ResourceOperationServiceImpl" class="cn.gtmap.landsale.core.ResourceOperationServiceImpl">
+        <property name="transBankAccountService" ref="TransBankAccountServiceImpl"/>
+        <property name="transResourceMinPriceService" ref="TransResourceMinPriceServiceImpl"/>
+        <property name="transResourceApplyService" ref="TransResourceApplyServiceImpl"/>
+        <property name="transResourceOfferService" ref="TransResourceOfferServiceImpl"/>
+        <property name="transResourceService" ref="TransResourceServiceImpl"/>
+    </bean>
+
+    <bean id="MimeTypeServiceImpl" class="cn.gtmap.landsale.admin.service.impl.MimeTypeServiceImpl">
+        <property name="mimeTypeMap">
+            <map>
+                <entry>
+                    <key><value>txt</value></key>
+                    <value>text/plain</value>
+                </entry>
+                <entry>
+                    <key><value>xml</value></key>
+                    <value>text/xml</value>
+                </entry>
+                <entry>
+                    <key><value>jpg</value></key>
+                    <value>image/jpeg</value>
+                </entry>
+                <entry>
+                    <key><value>jpeg</value></key>
+                    <value>image/jpeg</value>
+                </entry>
+                <entry>
+                    <key><value>png</value></key>
+                    <value>image/png</value>
+                </entry>
+                <entry>
+                    <key><value>bmp</value></key>
+                    <value>image/bmp</value>
+                </entry>
+                <entry>
+                    <key><value>gif</value></key>
+                    <value>image/gif</value>
+                </entry>
+                <entry>
+                    <key><value>json</value></key>
+                    <value>application/json</value>
+                </entry>
+                <entry>
+                    <key><value>zip</value></key>
+                    <value>application/zip</value>
+                </entry>
+                <entry>
+                    <key><value>rar</value></key>
+                    <value>application/rar</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="MaterialCenterServiceImpl" class="cn.gtmap.landsale.admin.service.impl.MaterialCenterServiceImpl">
+        <property name="materialMap">
+            <map>
+                <entry>
+                    <key><value>CA数字证书办理指南</value></key>
+                    <value>CA数字证书办理指南.doc</value>
+                </entry>
+                <entry>
+                    <key><value>CA数字证书安装说明</value></key>
+                    <value>CA数字证书安装说明.doc</value>
+                </entry>
+                <entry>
+                    <key><value>CA《江苏省组织机构电子证书业务申请单》</value></key>
+                    <value>CA《江苏省组织机构电子证书业务申请单》.doc</value>
+                </entry>
+                <entry>
+                    <key><value>CA《江苏省个人数字证书业务申请单》</value></key>
+                    <value>CA《江苏省个人数字证书业务申请单》.doc</value>
+                </entry>
+                <entry>
+                    <key><value>CA《江苏省电子证书技术服务合同书》</value></key>
+                    <value>CA《江苏省电子证书技术服务合同书》.jpg</value>
+                </entry>
+                <entry>
+                    <key><value>CA《承诺书》</value></key>
+                    <value>CA《承诺书》.doc</value>
+                </entry>
+            </map>
+        </property>
+        <property name="materialMap_cr">
+            <map>
+                <entry>
+                    <key><value>成交确认书（样板）</value></key>
+                    <value>成交确认书（样板）.doc</value>
+                </entry>
+                <entry>
+                    <key><value>出让合同(样板)</value></key>
+                    <value>出让合同(样板).doc</value>
+                </entry>
+                <entry>
+                    <key><value>竞买申请书</value></key>
+                    <value>竞买申请书.doc</value>
+                </entry>
+                <entry>
+                    <key><value>授权委托书</value></key>
+                    <value>授权委托书.doc</value>
+                </entry>
+                <entry>
+                    <key><value>网上挂牌出让流程</value></key>
+                    <value>网上挂牌出让流程.doc</value>
+                </entry>
+                <entry>
+                    <key><value>土地使用权网上竞价超过市场指导价报价规则</value></key>
+                    <value>一次报价规则.docx</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="BailNotificationTimerServiceImpl" class="cn.gtmap.landsale.admin.service.impl.BailNotifyTimerServiceImpl">
+        <property name="transResourceService" ref="TransResourceServiceImpl"/>
+        <property name="transResourceApplyService" ref="TransResourceApplyServiceImpl"/>
+        <property name="transUserApplyInfoService" ref="TransUserApplyInfoServiceImpl"/>
+        <property name="notificationTpls">
+            <map>
+                <entry>
+                    <key><value>bzjEndTime</value></key>
+                    <value><![CDATA[%{userName}您好,您报名竞买的地块%{resourceCode}，将于三天后下午四点截止缴纳保证金,请您尽快缴纳保证金。]]></value>
+                </entry>
+                <entry>
+                    <key><value>bzjEndTimeExt</value></key>
+                    <value><![CDATA[%{userName}您好,您报名竞买的地块%{resourceCode}，将于今天下午四点截止缴纳保证金,请您尽快缴纳保证金。]]></value>
+                </entry>
+                <entry>
+                    <key><value>gpEndTime</value></key>
+                    <value><![CDATA[%{userName}您好,您报名竞买的地块%{resourceCode}，将于今天下午两点截止挂牌,请您登录系统竞买。]]></value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+
+</beans>

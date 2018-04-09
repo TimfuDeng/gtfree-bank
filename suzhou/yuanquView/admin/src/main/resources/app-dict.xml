@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+    <bean id="BankAllList" class="cn.gtmap.landsale.core.BankAllList">
+        <property name="bankList">
+            <list>
+                <list>
+                    <value>BOC</value>
+                    <value>中国银行</value>
+                </list>
+                <list>
+                    <value>ABC</value>
+                    <value>中国农业银行</value>
+                </list>
+                <list>
+                    <value>ICBC</value>
+                    <value>中国工商银行</value>
+                </list>
+                <list>
+                    <value>CCB</value>
+                    <value>中国建设银行</value>
+                </list>
+                <list>
+                    <value>CMB</value>
+                    <value>招商银行</value>
+                </list>
+                <list>
+                    <value>CCCB</value>
+                    <value>中信银行</value>
+                </list>
+                <list>
+                    <value>SZB</value>
+                    <value>苏州银行</value>
+                </list>
+            </list>
+        </property>
+    </bean>
+    <bean id="RegionAllList" class="cn.gtmap.landsale.core.RegionAllList">
+        <property name="regionList">
+        <list>
+            <list>
+                <value>320503</value>
+                <value>苏州工业园区</value>
+            </list>
+        </list>
+    </property>
+        <property name="regionDeptList">
+            <list>
+                <list>
+                    <value>320503001</value>
+                    <value>苏州工业园区国土环保局</value>
+                </list>
+                <list>
+                    <value>320503002</value>
+                    <value>苏州工业园区土地储备中心</value>
+                </list>
+            </list>
+        </property>
+    </bean>
+
+</beans>

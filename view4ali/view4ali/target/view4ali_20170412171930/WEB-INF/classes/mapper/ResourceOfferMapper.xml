@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.gtmap.landsale.mapper.ResourceOfferMapper">
+    <resultMap id="BaseResultMap" type="cn.gtmap.landsale.model.TransResourceOffer">
+        <id column="offer_id" jdbcType="VARCHAR" property="offerId"/>
+        <result column="resource_id" jdbcType="VARCHAR" property="resourceId"/>
+        <!--<result column="user_name" jdbcType="VARCHAR" property="userName" />-->
+        <result column="offer_price" jdbcType="DOUBLE" property="offerPrice"/>
+        <result column="offer_time" jdbcType="BIGINT" property="offerTime"/>
+        <result column="offer_type" jdbcType="SMALLINT" property="offerType"/>
+        <result column="offer_num" jdbcType="INTEGER" property="offerNum"/>
+    </resultMap>
+
+    <sql id="Column_All">
+    offer_id, resource_id, offer_price, offer_time, offer_type, offer_num
+  </sql>
+
+    <select id="selectOfferListByPage" resultMap="BaseResultMap">
+        select
+        <include refid="Column_All"/>
+        from resource_offer
+        where resource_id = #{resourceId,jdbcType=VARCHAR}
+        order by offer_time desc
+        limit #{limit,jdbcType=INTEGER}
+        offset #{offset,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectCount" parameterType="java.lang.String" resultType="int">
+        select
+        count(1)
+        from resource_offer
+        where resource_id = #{resourceId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="cn.gtmap.landsale.model.TransResourceOffer">
+    insert into resource_offer
+     (offer_id, resource_id, user_name,offer_price, offer_time, offer_type, offer_num)
+    values (#{offerId,jdbcType=VARCHAR},
+            #{resourceId,jdbcType=VARCHAR},
+            #{userName,jdbcType=VARCHAR},
+            #{offerPrice,jdbcType=DOUBLE},
+            #{offerTime,jdbcType=BIGINT},
+            #{offerType,jdbcType=SMALLINT},
+            #{offerNum,jdbcType=INTEGER})
+  </insert>
+
+
+</mapper>

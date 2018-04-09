@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtmap.txgc.dao.CommonDao" >
+
+	<select id="commonQuery" resultType="Map" parameterType="Map" statementType="STATEMENT">
+		select ${columns} from ${tableName}
+		<where>
+			<if test="condition != null and condition!=''" >
+				${condition}
+			</if>
+		</where>
+	</select>
+	
+	<select id="commonSqlQuery" resultType="Map" parameterType="java.lang.String" statementType="STATEMENT">
+			${sql}
+	</select>
+	
+	<update id="saveFj" parameterType="Map">
+		insert into T_TXGC_FJ (FJ_GUID, FJ_MC, FJ_LJ, REAL_NAME, LINK_GUID, CREATE_USER, CREATE_TIME) values
+		(#{FJ_GUID},#{FJ_MC},#{FJ_LJ},#{REAL_NAME},#{LINK_GUID},#{CREATE_USER},SYSDATE)
+	</update>
+	
+	<delete id="deleteFj" parameterType="java.lang.String">
+    	delete from T_TXGC_FJ where FJ_GUID = #{fjGuid,jdbcType=VARCHAR}
+	</delete>
+</mapper>

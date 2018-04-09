@@ -1,0 +1,84 @@
+
+spring:
+  application:
+    name: client-server
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    devtools:
+      livereload:
+        enabled: true
+      restart:
+        enabled: true
+        exclude: resources/**, static/** ,templates/**, **/*Test.class, **/*Tests.class, **/css/**
+  freemarker:
+    cache: false
+    template-loader-path: classpath:/templates
+    settings:
+      auto_include: common/common.ftl
+      template_exception_handler: rethrow
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      date_format: yyyy-MM-dd
+      time_format: HH:mm:ss
+      number_format: 0.##################
+      boolean_format: true,false
+      defaultEncoding: UTF-8
+      url_escaping_charset: UTF-8
+      template_update_delay: 0
+
+com:
+  zipkin:
+    serviceName: client-server
+    url: http://127.0.0.1:9411
+    connectTimeout: 6000
+    readTimeout: 6000
+    flushInterval: 1
+    compressionEnabled: true
+
+javamd:
+  monitor:
+    enable: true
+
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://${center.server}/eureka/
+    healthcheck:
+      enabled: true
+
+hystrix:
+  threadpool:
+    default:
+      coreSize: 5000 ##并发执行的最大线程数，默认10
+      maxQueueSize: 5000 ##BlockingQueue的最大队列数
+      queueSizeRejectionThreshold: 1000 ##即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝
+  command:
+    default:
+      circuitBreaker:
+        enabled: false
+      execution:
+        isolation:
+          strategy: THREAD ## SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 100000 #缺省为1000
+          semaphore:
+            maxConcurrentRequests: 5000
+#  config:
+#    stream:
+#      maxConcurrentConnections: 50
+
+feign:
+  httpclient:
+    enabled:  false
+  hystrix:
+    enabled: true
+
+ribbon:
+  eureka:
+    enabled: true
+

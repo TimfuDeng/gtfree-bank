@@ -1,0 +1,134 @@
+.va-m span{
+    margin-right: 20px;
+}
+.label{
+    border-radius: 0px;
+}
+.link-wrap{
+    border: 1px solid #eaeaea;
+    display: block;
+    position: relative;
+    height: 205px;
+}
+.link-wrap:hover {
+    border: 1px solid #d91615;
+    text-decoration:none;
+}
+
+.link-wrap:hover .pic-title {
+    background-color: #ba2f2f;
+    color:#ffffff;
+    background:#ba2f2f !important;
+}
+
+
+
+.header-section{
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    height: 185px;
+    line-height: 180px;
+}
+.pic-title{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background: rgba(255,255,255,.9);
+    /*background:#ffffff !important;*/
+    filter: alpha(opacity=90);
+    color: #4d4d4d;
+    font-size: 14px;
+    position: absolute;
+    padding: 0 13px;
+    left: 0;
+    bottom: 0;
+    height: 28px;
+    line-height: 28px;
+    display: block;
+    width: 254px;
+    margin-bottom: 0px;
+    z-index: 3000;
+
+}
+.pic{
+    display: inline;
+    vertical-align: middle;
+    /*max-width: 280px;*/
+    width: 280px;
+    height: 185px;
+}
+.info-section{
+    color: #999;
+    display: block;
+    font-size: 12px;
+    padding-left: 13px;
+    height: 131px;
+}
+.price {
+    padding-top: 10px;
+    line-height: 30px;
+    font-family: 'Microsoft YaHei',arial tahoma,'Hiragino Sans GB','宋体',sans-serif;
+    font-style: normal;
+    margin-bottom: 0px;
+}
+.value em{
+    font-style: normal;
+    font-weight: 700;
+}
+.value {
+    color: #777;
+    padding-left: 10px;
+    font-weight: 700;
+}
+.price-font-small{
+    font-size: 26px;
+    font-family: 'Microsoft YaHei',arial tahoma,'Hiragino Sans GB','宋体',sans-serif;
+    font-weight: 700;
+}
+.price-assess{
+    line-height: 20px;
+}
+.currency{
+    font-size: 16px;
+}
+.flag{
+    position: absolute;
+    display: block;
+    width: 70px;
+    height: 23px;
+    right: -15px;
+    bottom: 45px;
+}
+.time{
+    color: #000;
+}
+.label{
+    width: 48px !important;
+    text-align: center;
+}
+
+.label-none{
+    background-color: #ffffff;
+    color: #000000 !important;
+}
+.label-none a{
+     background-color: #ffffff;
+     color: #7a7a7a !important;
+     font-weight: normal;
+ }
+.label-none a:hover{
+    text-decoration:none;
+}
+.label-danger{
+    background-color: #ba2f2f;
+}
+.offer_unit{
+    font-size: 16px;
+}
+
+.value span *{
+font-family: "Microsoft YaHei",arial tahoma,"Hiragino Sans GB","宋体",sans-serif;
+color:rgb(179, 179, 179);
+}

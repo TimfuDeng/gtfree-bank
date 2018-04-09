@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="view4ali:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="view4ali_20170204153858.war">
+      <element id="artifact" artifact-name="view4ali:war exploded" />
+    </root>
+  </artifact>
+</component>

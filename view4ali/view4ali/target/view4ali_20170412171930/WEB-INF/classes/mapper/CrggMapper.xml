@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.gtmap.landsale.mapper.TransCrggMapper">
+    <resultMap id="BaseResultMap" type="cn.gtmap.landsale.model.TransCrgg">
+        <id column="gg_id" jdbcType="VARCHAR" property="ggId"/>
+        <result column="gg_title" jdbcType="VARCHAR" property="ggTitle"/>
+        <result column="region_code" jdbcType="VARCHAR" property="regionCode"/>
+        <result column="gg_begin_time" jdbcType="TIMESTAMP" property="ggBeginTime"/>
+        <result column="gg_end_time" jdbcType="TIMESTAMP" property="ggEndTime"/>
+        <result column="gg_type" jdbcType="SMALLINT" property="ggType"/>
+        <result column="gg_content" jdbcType="VARCHAR" property="ggContent"/>
+        <result column="gg_num" jdbcType="VARCHAR" property="ggNum"/>
+        <result column="gygg_id" jdbcType="VARCHAR" property="gyggId"/>
+        <result column="attachments" jdbcType="VARCHAR" property="attachments"
+                typeHandler="cn.gtmap.landsale.support.JSONHandler"/>
+    </resultMap>
+
+    <sql id="Column_All">
+      gg_id, gg_title, region_code, gg_begin_time, gg_end_time, gg_type,gg_content,gg_num,gygg_id,attachments
+    </sql>
+
+    <select id="selectByKey" resultMap="BaseResultMap">
+        select
+        <include refid="Column_All"/>
+        from trans_crgg
+        where gg_id = #{ggId,jdbcType=VARCHAR}
+    </select>
+
+
+    <insert id="insert" parameterType="cn.gtmap.landsale.model.TransCrgg">
+    insert into trans_crgg
+     (gg_id, gg_title, region_code, gg_begin_time, gg_end_time, gg_type,gg_content,gg_num,gygg_id,attachments)
+    values (#{ggId,jdbcType=VARCHAR},
+            #{ggTitle,jdbcType=VARCHAR},
+            #{regionCode,jdbcType=VARCHAR},
+            #{ggBeginTime,jdbcType=TIMESTAMP},
+            #{ggEndTime,jdbcType=TIMESTAMP},
+            #{ggType,jdbcType=SMALLINT},
+            #{ggContent,jdbcType=VARCHAR},
+            #{ggNum,jdbcType=VARCHAR},
+            #{gyggId,jdbcType=VARCHAR},
+            #{attachments,jdbcType=VARCHAR,typeHandler=cn.gtmap.landsale.support.JSONHandler})
+  </insert>
+
+    <update id="update" parameterType="cn.gtmap.landsale.model.TransCrgg">
+      update trans_crgg SET
+            gg_title=#{ggTitle,jdbcType=VARCHAR},
+            region_code=#{regionCode,jdbcType=VARCHAR},
+            gg_begin_time=#{ggBeginTime,jdbcType=TIMESTAMP},
+            gg_end_time=#{ggEndTime,jdbcType=TIMESTAMP},
+            gg_type=#{ggType,jdbcType=SMALLINT},
+            gg_content=#{ggContent,jdbcType=VARCHAR},
+            gg_num=#{ggNum,jdbcType=VARCHAR},
+            gygg_id=#{gyggId,jdbcType=VARCHAR},
+            attachments=#{attachments,jdbcType=VARCHAR,typeHandler=cn.gtmap.landsale.support.JSONHandler}
+      where gg_id = #{ggId,jdbcType=VARCHAR}
+    </update>
+</mapper>

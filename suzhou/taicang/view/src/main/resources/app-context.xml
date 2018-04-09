@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.3.xsd">
+
+    <context:annotation-config/>
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:application.properties"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="fileEncoding" value="utf-8"/>
+    </bean>
+
+    <!-- freemarker的配置 -->
+    <bean id="freemarkerConfig" class="cn.gtmap.egovplat.core.support.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPaths" value="/WEB-INF/"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_exception_handler">rethrow</prop>
+                <prop key="template_update_delay">1</prop>
+                <prop key="localized_lookup">false</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="time_format">HH:mm:ss</prop>
+                <prop key="number_format">0.##################</prop>
+                <prop key="boolean_format">true,false</prop>
+                <prop key="auto_import">
+                    /views/common/ui.ftl as ui,
+                    spring.ftl as s
+                </prop>
+                <prop key="auto_include">/views/common/common.ftl</prop>
+                <prop key="defaultEncoding">UTF-8</prop>
+                <prop key="url_escaping_charset">UTF-8</prop>
+            </props>
+        </property>
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="WebUtil">
+                    <bean class="cn.gtmap.landsale.web.freemarker.WebUtil">
+                        <property name="caEnabled" value="false"/>
+                    </bean>
+                </entry>
+                <entry key="ImageUtil">
+                    <bean class="cn.gtmap.landsale.web.freemarker.ImageUtil">
+                        <property name="transFileService" ref="TransFileServiceImpl"/>
+                    </bean>
+                </entry>
+                <entry key="ResourceUtil">
+                    <bean class="cn.gtmap.landsale.web.freemarker.ResourceUtil">
+                        <property name="transResourceService" ref="TransResourceServiceImpl"/>
+                        <property name="transCrggService" ref="TransCrggServiceImpl"/>
+                        <property name="transResourceApplyService" ref="TransResourceApplyServiceImpl"/>
+                    </bean>
+                </entry>
+                <entry key="UserUtil">
+                    <bean class="cn.gtmap.landsale.web.freemarker.UserUtil">
+                        <property name="transUserService" ref="TransUserServiceImpl"/>
+                    </bean>
+                </entry>
+                <entry key="PriceUtil">
+                    <bean class="cn.gtmap.landsale.web.freemarker.PriceUtil">
+                        <property name="transResourceOfferService" ref="TransResourceOfferServiceImpl"/>
+                        <property name="transResourceMinPriceService" ref="TransResourceMinPriceServiceImpl"/>
+                    </bean>
+                </entry>
+                <entry key="RegionUtil">
+                    <bean class="cn.gtmap.landsale.web.freemarker.RegionUtil">
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="commonDataSource" class="cn.gtmap.egovplat.core.support.spring.DataSourceProxy">
+        <property name="defaultTransactionIsolation" value="2"/>
+        <property name="defaultAutoCommit" value="false"/>
+        <property name="targetDataSource">
+            <bean class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+                <property name="driverClassName" value="${db.driver}"/>
+                <property name="jdbcUrl" value="${db.url}"/>
+                <property name="username" value="${db.username}"/>
+                <property name="password" value="${db.password}"/>
+                <property name="connectionTimeout" value="10000"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="userValidateDataSource" class="cn.gtmap.egovplat.core.support.spring.DataSourceProxy">
+        <property name="defaultTransactionIsolation" value="2"/>
+        <property name="defaultAutoCommit" value="false"/>
+        <property name="targetDataSource">
+            <bean class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+                <property name="driverClassName" value="${validate.user.db.driver}"/>
+                <property name="jdbcUrl" value="${validate.user.db.url}"/>
+                <property name="username" value="${validate.user.db.username}"/>
+                <property name="password" value="${validate.user.db.password}"/>
+                <property name="connectionTimeout" value="10000"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="cn.gtmap.landsale.datasource.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="commonDataSource" value-ref="commonDataSource" />
+                <entry key="userValidateDataSource" value-ref="userValidateDataSource" />
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="commonDataSource" />
+    </bean>
+
+    <bean id="entityManagerFactory" class="cn.gtmap.egovplat.core.support.jpa.EntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="cn.gtmap.landsale.model"/>
+        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
+        <property name="persistenceProviderClass" value="org.hibernate.ejb.HibernatePersistence"/>
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="hibernate.current_session_context_class" value="thread"/>
+                <entry key="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+                <entry key="hibernate.default_batch_fetch_size" value="16"/>
+                <entry key="hibernate.jdbc.fetch_size" value="50"/>
+                <entry key="hibernate.jdbc.batch_size" value="25"/>
+                <entry key="hibernate.max_fetch_depth" value="2"/>
+                <entry key="use_streams_for_binary" value="true"/>
+                <entry key="javax.persistence.validation.mode" value="NONE"/>
+                <entry key="hibernate.archive.autodetection" value="class"/>
+                <entry key="hibernate.query.startup_check" value="false"/>
+                <entry key="hibernate.cache.auto_evict_collection_cache" value="false"/> <!--这个设置为true有问题，暂时改为false，manytomany的关系手动维护 -->
+                <entry key="hibernate.cache.use_structured_entries" value="false"/>
+                <entry key="hibernate.cache.use_second_level_cache" value="false"/>
+                <entry key="hibernate.cache.use_query_cache" value="false"/>
+                <entry key="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>
+                <entry key="hibernate.dialect" value="${hibernate.dialect}"/>
+                <entry key="hibernate.hbm2ddl.auto" value="${hibernate.hbm2ddl.auto}"/>
+                <entry key="hibernate.show_sql" value="${hibernate.debug}"/>
+                <entry key="hibernate.format_sql" value="${hibernate.debug}"/>
+                <entry key="hibernate.generate_statistics" value="false"/>
+            </map>
+        </property>
+        <property name="databasePopulator">
+            <bean class="org.springframework.jdbc.datasource.init.ResourceDatabasePopulator">
+                <property name="scripts" value="classpath:/META-INF/sql/init.sql"/>
+                <property name="sqlScriptEncoding" value="utf-8"/>
+                <property name="continueOnError" value="true"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="generateDdl" value="false"/>
+        <property name="database">
+            <util:constant static-field="${jpa.dialect}"/>
+        </property>
+    </bean>
+
+    <bean id="sessionFactory" class="cn.gtmap.egovplat.core.support.jpa.SessionFactoryFactoryBean">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+    <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache.xml"/>
+        <property name="shared" value="true"/>
+    </bean>
+
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="ehCacheManager"/>
+    </bean>
+
+    <bean id="conversionService" class="cn.gtmap.egovplat.core.support.spring.ConversionService">
+        <property name="converters">
+            <set>
+                <bean class="cn.gtmap.egovplat.core.support.spring.DateToStringConverter"/>
+                <bean class="cn.gtmap.egovplat.core.support.spring.StringToDateConverter"/>
+            </set>
+        </property>
+    </bean>
+
+    <cache:annotation-driven cache-manager="cacheManager" proxy-target-class="true"/>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="basenames" value="classpath:message/errors,classpath:message/messages,classpath:message/view-errors"/>
+    </bean>
+
+    <bean class="cn.gtmap.egovplat.core.i18n.NLS">
+        <property name="messageProvider">
+            <bean class="cn.gtmap.egovplat.core.i18n.SpringMessageProvider">
+                <property name="messageSource" ref="messageSource"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="resourceOfferQueueService" class="cn.gtmap.landsale.mq.ResourceOfferQueueServiceImpl"/>
+
+    <bean id="resourceOfferMessageListener" class="cn.gtmap.landsale.mq.ResourceOfferMessageListener">
+        <property name="resourceOfferQueueService" ref="resourceOfferQueueService"/>
+    </bean>
+
+    <!--<bean id="defaultClassMapper" class="org.springframework.amqp.support.converter.DefaultClassMapper"/>-->
+    <bean id="fastJsonAmqpMessageConverter" class="cn.gtmap.landsale.mq.support.FastJsonMessageConverter">
+        <property name="classMapper">
+            <bean class="org.springframework.amqp.support.converter.DefaultClassMapper"/>
+        </property>
+    </bean>
+
+    <import resource="app-service.xml"/>
+    <import resource="app-thread.xml"/>
+    <import resource="app-dict.xml"/>
+</beans>

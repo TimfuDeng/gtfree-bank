@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtmap.txgc.dao.CommonDao" >
+
+	<select id="commonQuery" resultType="Map" parameterType="Map" statementType="STATEMENT">
+		select ${columns} from ${tableName}
+		<where>
+			<if test="condition != null and condition!=''" >
+				${condition}
+			</if>
+		</where>
+	</select>
+	
+	<select id="commonSqlQuery" resultType="Map" parameterType="java.lang.String" statementType="STATEMENT">
+			${sql}
+	</select>
+	
+	<insert id="saveCommon" parameterType="Map">
+		insert into ${tableName}
+		<trim prefix="("  suffix=")" suffixOverrides=",">
+		<foreach collection="columns_timestamp" item="item" index="index"  >
+			${item},
+		</foreach>
+		<foreach collection="columns_clob" item="item" index="index" >
+			${item},
+		</foreach>
+		<foreach collection="columns_decimal" item="item" index="index" >
+			${item},
+		</foreach>
+		<foreach collection="columns_varchar" item="item" index="index">
+			${item},
+		</foreach>
+		</trim>
+
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<foreach collection="values_timestamp" item="item" index="index"  >
+			to_timestamp(#{item},'yyyy-mm-dd hh24:mi:ss.ff'),
+		</foreach>
+		<foreach collection="values_clob" item="item" index="index"  separator="," >
+			<![CDATA[#{item,jdbcType=CLOB}]]>,
+		</foreach>
+		<foreach collection="values_decimal" item="item" index="index"  >
+			#{item,jdbcType=DECIMAL},
+		</foreach>
+		<foreach collection="values_varchar" item="item" index="index" >
+			#{item,jdbcType=VARCHAR},
+		</foreach>
+		</trim>
+	</insert>
+
+	<!-- 此sql具有一定的局限性-->
+	<insert id="updateCommon" parameterType="Map">
+		update  ${tableName}
+		<trim prefix="set">
+			${columns}
+		</trim>
+		<where>
+			<if test="condition != null and condition!=''" >
+				${condition}
+			</if>
+		</where>
+	</insert>
+
+
+	<!--<insert id="saveCrgg" parameterType="Map">
+		insert into TRANS_CRGG
+		<trim prefix="(" suffix=")"  >
+		<if test="GG_BEGIN_TIME != null" >
+			GG_BEGIN_TIME,
+		</if>
+			<if test="GG_TYPE != null" >
+				GG_TYPE,
+			</if>
+			<if test="AFFICHE_TYPE != null" >
+				AFFICHE_TYPE,
+			</if>
+			&lt;!&ndash;<if test="GG_CONTENT != null" >
+				GG_CONTENT,
+			</if>&ndash;&gt;
+			<if test="GG_NUM != null" >
+				GG_NUM,
+			</if>
+			<if test="GG_ID != null" >
+				GG_ID,
+			</if>
+			<if test="GG_TITLE != null" >
+				GG_TITLE,
+			</if>
+			<if test="REMISE_TYPE != null" >
+				REMISE_TYPE,
+			</if>
+			<if test="CRGG_STATUS != null" >
+				CRGG_STATUS,
+			</if>
+			<if test="REGION_CODE != null" >
+				REGION_CODE,
+			</if>
+			<if test="REMISE_UNIT != null" >
+				REMISE_UNIT,
+			</if>
+			<if test="WIN_STANDARD != null" >
+				WIN_STANDARD,
+			</if>
+			<if test="RESOURCE_LB != null" >
+				RESOURCE_LB,
+			</if>
+			<if test="GG_END_TIME != null" >
+				GG_END_TIME
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")"  >
+			<if test="GG_BEGIN_TIME != null" >
+				#{GG_BEGIN_TIME,jdbcType=TIMESTAMP},
+			</if>
+			<if test="GG_TYPE != null" >
+				#{GG_TYPE,jdbcType=DECIMAL},
+			</if>
+			<if test="AFFICHE_TYPE != null" >
+				#{AFFICHE_TYPE,jdbcType=DECIMAL},
+			</if>
+			&lt;!&ndash;<if test="GG_CONTENT != null" >
+				#{GG_CONTENT,jdbcType=CLOB},
+			</if>&ndash;&gt;
+			<if test="GG_NUM != null" >
+				#{GG_NUM,jdbcType=VARCHAR},
+			</if>
+			<if test="GG_ID != null" >
+				#{GG_ID,jdbcType=VARCHAR},
+			</if>
+			<if test="GG_TITLE != null" >
+				#{GG_TITLE,jdbcType=VARCHAR},
+			</if>
+			<if test="REMISE_TYPE != null" >
+				#{REMISE_TYPE,jdbcType=VARCHAR},
+			</if>
+			<if test="CRGG_STATUS != null" >
+				#{CRGG_STATUS,jdbcType=DECIMAL},
+			</if>
+			<if test="REGION_CODE != null" >
+				#{REGION_CODE,jdbcType=VARCHAR},
+			</if>
+			<if test="REMISE_UNIT != null" >
+				#{REMISE_UNIT,jdbcType=VARCHAR},
+			</if>
+			<if test="WIN_STANDARD != null" >
+				#{WIN_STANDARD,jdbcType=VARCHAR},
+			</if>
+			<if test="RESOURCE_LB != null" >
+				#{RESOURCE_LB,jdbcType=VARCHAR},
+			</if>
+			<if test="GG_END_TIME != null" >
+				#{GG_END_TIME,jdbcType=TIMESTAMP}
+			</if>
+
+		</trim>
+
+	</insert>
+
+	<insert id="saveTest">
+		insert into TRANS_CRGG (GG_BEGIN_TIME,GG_TYPE,AFFICHE_TYPE,GG_CONTENT,GG_NUM,GG_ID,GG_TITLE,REMISE_TYPE,REGION_CODE, REMISE_UNIT,  WIN_STANDARD, RESOURCE_LB, GG_END_TIME )
+		values (sysdate,'1','1','2222222222','20170110','1','1hao','1','320150','国土局','111111222','nj',sysdate)
+	</insert>-->
+	<!--
+	<delete id="deleteFj" parameterType="java.lang.String">
+    	delete from T_TXGC_FJ where FJ_GUID = #{fjGuid,jdbcType=VARCHAR}
+	</delete>
+	-->
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh xmlns="http://sitemesh.org/xml/config-v3">
+    <mime-type>text/html</mime-type>
+    <mime-type>application/vnd.wap.xhtml+xml</mime-type>
+    <mime-type>application/xhtml+xml</mime-type>
+
+    <mapping path="/login" exclude="true"/>
+    <mapping path="/static/*" exclude="true"/>
+    <mapping path="/*aspx" exclude="true"/>
+    
+    <mapping path="/*">
+        <decorator>/views/common/layout.ftl</decorator>
+    </mapping>
+
+</sitemesh>

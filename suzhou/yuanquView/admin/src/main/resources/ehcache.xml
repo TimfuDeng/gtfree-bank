@@ -1,0 +1,175 @@
+<ehcache updateCheck="false">
+    <diskStore path="java.io.tmpdir"/>
+
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"/>
+    <cache
+            name="CrggServiceLandjsCache"
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="86400"
+            timeToLiveSeconds="86400"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+    </cache>
+
+    <cache
+            name="RegionCache"
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="86400"
+            timeToLiveSeconds="86400"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+    </cache>
+
+    <cache
+           name="BankServiceCache"
+           maxElementsInMemory="50"
+           eternal="false"
+           timeToIdleSeconds="3"
+           timeToLiveSeconds="3"
+           overflowToDisk="false">
+    </cache>
+    <cache
+            name="BankAccountCache"
+            maxElementsInMemory="100"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="false">
+    </cache>
+    <cache
+            name="BankPayCache"
+            maxElementsInMemory="100"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="false">
+    </cache>
+
+    <cache
+            name="ResourceCache"
+            maxElementsInMemory="500"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="false">
+    </cache>
+
+    <cache
+           name="CrggCache"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="3"
+           timeToLiveSeconds="3"
+           overflowToDisk="false">
+    </cache>
+
+    <cache
+            name="ResourceQueryCache"
+            maxElementsInMemory="500"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="false">
+    </cache>
+
+    <cache
+            name="OnlineQueryCache"
+            maxElementsInMemory="500"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="false">
+    </cache>
+
+    <cache
+            name="TransResourceOfferServiceImplCache"
+            maxElementsInMemory="2000"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="false">
+    </cache>
+
+    <cache
+            name="TransResourceOfferServicePageCache"
+            maxElementsInMemory="100"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="false">
+    </cache>
+
+    <cache
+            name="AuthorizationCache"
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+    </cache>
+
+    <cache
+            name="OneTargetQueryCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="false">
+    </cache>
+
+    <cache
+            name="OnePriceLogCache"
+            maxElementsInMemory="2000"
+            eternal="false"
+            timeToIdleSeconds="3"
+            timeToLiveSeconds="3"
+            overflowToDisk="false">
+    </cache>
+
+    <cache
+            name="FileCache"
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="86400"
+            timeToLiveSeconds="86400"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+    </cache>
+
+    <cache
+            name="MaterialCenterCache"
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="86400"
+            timeToLiveSeconds="86400"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+    </cache>
+</ehcache>

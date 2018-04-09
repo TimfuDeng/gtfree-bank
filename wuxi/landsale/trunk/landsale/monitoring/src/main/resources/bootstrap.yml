@@ -1,0 +1,29 @@
+
+spring:
+  application:
+    name: monitoring-server
+
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://${center.server}/eureka/
+    healthcheck:
+      enabled: true
+
+feign:
+  httpclient:
+    enabled:  false
+
+hystrix:
+  config:
+    stream:
+      maxConcurrentConnections: 50
+
+#turbine:
+#  aggregator:
+#    clusterConfig: DEMO-CLIENT
+#  appConfig: demo-client
+#  clusterNameExpression: metadata['cluster']
